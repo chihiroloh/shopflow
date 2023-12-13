@@ -1,0 +1,30 @@
+/* .custom-navbar {
+  border-bottom: 1px solid #ccc;
+} */
+/* In your Module.css or custom CSS file */
+.custom-input {
+  height: 44px; /* Adjust the width as per your requirements */
+}
+/* In your Module.css or custom CSS file */
+.custom-input::placeholder {
+  color: #c5c5c6;
+}
+/* In your Module.css or custom CSS file */
+.custom-navbar .me-auto a {
+  color: black; /* Set the font color to black */
+  margin-right: 10px; /* Adjust the right margin for spacing */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.custom-navbar .d-flex.align-items-center .me-auto a:last-child {
+  margin-right: 0; /* Remove margin-right for the last link to prevent extra spacing */
+}
+/* In your Module.css or custom CSS file */
+.custom-navbar .d-flex.align-items-center a {
+  color: black; /* Set the font color to black */
+  margin-right: 10px; /* Adjust the right margin for spacing */
+  text-decoration: none; /* Remove underline from links */
+}
+.custom-h3 {
+  font-size: 24px;
+}
