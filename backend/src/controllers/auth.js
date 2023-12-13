@@ -51,9 +51,8 @@ const login = async (req, res) => {
       return res.status(401).json({ status: "error", msg: "login failed" });
     }
 
-    // Include user's ID in the JWT token claims
     const claims = {
-      id: user._id, // Include the user's unique ID from MongoDB
+      id: user._id,
       username: user.username,
       isAdmin: user.isAdmin,
     };
