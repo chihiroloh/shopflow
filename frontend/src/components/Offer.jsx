@@ -9,9 +9,9 @@ const Offer = ({ listing_id }) => {
   const navigate = useNavigate();
 
   const submitOffer = async () => {
-    const requestUrl = `${import.meta.env.VITE_SERVER}/api/create`; // Adjusted URL
+    const requestUrl = `${import.meta.env.VITE_SERVER}/api/create`;
     const requestBody = {
-      listingId: listing_id, // Include listing_id
+      listingId: listing_id,
       price: parseInt(price), // Convert to number
     };
 
@@ -41,7 +41,6 @@ const Offer = ({ listing_id }) => {
       }
     } catch (error) {
       console.error("Error submitting offer", error.message);
-      // Handle the error
     }
   };
 

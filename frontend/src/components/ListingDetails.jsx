@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { Container } from "react-bootstrap"; // Import Bootstrap Container component
+import { Container } from "react-bootstrap";
 import MakeOffer from "./Offer";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
 
 const ListingDetail = () => {
-  const { id } = useParams(); // Get the listing ID from URL
+  const { id } = useParams();
   const userCtx = useContext(UserContext);
 
   const [listing, setListing] = useState(null);
@@ -32,9 +32,7 @@ const ListingDetail = () => {
 
   return (
     <Container>
-      {" "}
-      {/* Wrap the content in a Container */}
-      <NavBar /> {/* Render the NavBar within the Container */}
+      <NavBar />
       <hr />
       {listing && (
         <div>
