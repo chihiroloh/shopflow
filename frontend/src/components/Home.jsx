@@ -1,80 +1,106 @@
-import React from "react";
-import bottom from "../assets/bottom.png";
-import reviews from "../assets/reviews.png";
-import appstore from "../assets/appstore.png";
-import car from "../assets/car.png";
-import fashion from "../assets/fashion.png";
+import React, { useContext, useState, useEffect } from "react";
+import UserContext from "../contexts/user";
+import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import header from "../assets/headerimg.jpg";
 import electronics from "../assets/electronics.png";
-import { Container, Col } from "react-bootstrap";
+import fashion from "../assets/fashion.png";
+import NavBar from "./NavBar";
 import "./Module.css";
 
-function Home() {
-  const buttonStyle = {
-    backgroundColor: "#f0f1f1",
-    width: "120px", // Set your desired width
-    height: "150px", // Set your desired height
-  };
+const Home = () => {
+  const userCtx = useContext(UserContext);
+  const username = userCtx.username; // Get the username from UserContext
+  const [listings, setListings] = useState([]); // State to store listings
 
-  const buttonContentStyle = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-  };
+  useEffect(() => {
+    // Function to fetch listings
+    const fetchListings = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/api/listings"); // Adjust URL as needed
+        if (!response.ok) {
+          throw new Error("Failed to fetch listings");
+        }
+        const data = await response.json();
+        setListings(data);
+      } catch (error) {
+        console.error("Error fetching listings:", error);
+      }
+    };
 
-  const imageStyle = {
-    width: "50px",
-    marginBottom: "20px", // Add some space between image and text
-  };
+    fetchListings();
+  }, []);
 
   return (
     <div>
-      <div className="content">
+      <NavBar />
+      <div className="home-content">
+        <img src={header} alt="Header" />
         <Container>
-          <div>
-            <hr />
-            <h3 className="custom-h3">What would you like to find?</h3>
-            <br />
-            <div className="buttons d-flex justify-content-start">
-              <div className="col-4 text-center">
-                <button
-                  className="btn btn-primary outline-none focus"
-                  style={buttonStyle}
-                >
-                  <div style={buttonContentStyle}>
-                    <img
-                      src={electronics}
-                      alt="Electronics"
-                      style={imageStyle}
-                    />
-                    <span className="text-black">Electronics</span>
-                  </div>
-                </button>
-              </div>
-              <div className="col-4 text-center">
-                <button
-                  className="btn btn-primary outline-none focus"
-                  style={buttonStyle}
-                >
-                  <div style={buttonContentStyle}>
-                    <img src={fashion} alt="Fashion" style={imageStyle} />
-                    <span className="text-black">Fashion</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-            <br />
-            <br />
+          <p className="home-category-text">Category</p>
+          <div className="home-overlay">
+            <h1>Where deals come to life.</h1>
             <div>
-              <h3 className="custom-h3">Recommended For You</h3>
+              <Link to="/sell">
+                <button className="home-button">Sell Now</button>
+              </Link>
             </div>
           </div>
         </Container>
       </div>
-      <hr />
+      <br />
+      <br />
+
+      {/* Category */}
+      <Container>
+        <div className="listing-div">
+          <h1 className="hello">Hello, {username}!</h1>{" "}
+          <h2 className="buy-now-text">Buy now</h2>
+          <br />
+          <h4 className="text-below-content">What are you looking for?</h4>
+          <div className="box-container">
+            <Link to="/electronics">
+              <div className="button-like">
+                <img
+                  src={electronics}
+                  alt="Electronics"
+                  className="small-electronics"
+                />
+                <p className="box-text">Electronics</p>
+              </div>
+            </Link>
+            <Link to="/fashion">
+              <div className="button-like" style={{ marginLeft: "50px" }}>
+                <img
+                  src={fashion}
+                  alt="Fashion"
+                  className="small-electronics"
+                />
+                <p className="box-text">Fashion</p>
+              </div>
+            </Link>
+          </div>
+        </div>
+        <br />
+        <h4 className="text-below">All listings</h4>
+        <div className="listings-container">
+          {listings.map((listing) => (
+            <Link to={`/listing/${listing._id}`} key={listing._id}>
+              <button className="listing-button">
+                <div className="listing">
+                  <h5>{listing.title}</h5>
+                  <p>{listing.description}</p>
+                  <p>Price: ${listing.price}</p>
+                  <p>Posted by: {listing.username}</p>
+                  {/* Display the username here */}
+                </div>
+              </button>
+            </Link>
+          ))}
+        </div>
+      </Container>
     </div>
   );
-}
+};
 
 export default Home;

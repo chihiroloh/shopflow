@@ -1,149 +1,72 @@
-import React, { useState } from "react";
-import {
-  Container,
-  Nav,
-  Navbar,
-  Button,
-  Form,
-  FormControl,
-  Modal,
-} from "react-bootstrap";
+import React, { useContext } from "react";
+import { Container, Nav, Navbar, NavDropdown, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import logo from "../assets/carousell-logo.png";
+import logo from "../assets/shopflow.png";
+import user from "../assets/user.png";
 import "./Module.css";
+import UserContext from "../contexts/user"; // Import the UserContext
 
 function NavBar() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLoginShow = () => setShowLogin(true);
-  const handleLoginClose = () => setShowLogin(false);
-  const handleRegisterShow = () => setShowRegister(true);
-  const handleRegisterClose = () => setShowRegister(false);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    handleLoginClose();
-  };
+  const userCtx = useContext(UserContext); // Access the UserContext
 
   return (
     <div className="nav-wrapper">
-      <Navbar className="custom-navbar">
+      <Navbar expand="sm" className="custom-navbar">
         <Container>
-          <Link to="/">
-            <img id="logo" src={logo} height="80" alt="Carousell Logo" />
+          <Link to="/home" className="navbar-brand">
+            <img src={logo} height="30" alt="shopflow Logo" />
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Nav className="me-auto">
-            <Link to="/">Home</Link>
-            <Link to="/electronics">Electronics</Link>
-            <Link to="/fashion">Fashion</Link>
-          </Nav>
-          <Nav className="d-flex align-items-center">
-            <Link to="/allcategories">All Categories</Link>
-            {!isLoggedIn && (
-              <>
-                <Button
-                  style={{
-                    backgroundColor: "red",
-                    borderColor: "red",
-                    margin: "0 10px",
-                  }}
-                  onClick={handleRegisterShow}
-                >
-                  Register
-                </Button>
-                <Button
-                  style={{ backgroundColor: "red", borderColor: "red" }}
-                  onClick={handleLoginShow}
-                >
-                  Login
-                </Button>
-              </>
-            )}
-            <Button style={{ backgroundColor: "red", borderColor: "red" }}>
-              <Link to="/sell" style={{ color: "white" }}>
-                Sell
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Link to="/home" className="nav-link">
+                Home
               </Link>
-            </Button>
-          </Nav>
+              <Link to="/electronics" className="nav-link">
+                Electronics
+              </Link>
+              <Link to="/fashion" className="nav-link">
+                Fashion
+              </Link>
+            </Nav>
+            <Nav>
+              {userCtx.isAdmin && (
+                <Button as={Link} to="/admin" variant="primary">
+                  Users
+                </Button>
+              )}
+              <button>
+                <Link to="/sell">Sell</Link>
+              </button>
+              <button>
+                <Link to="/home">Buy</Link>
+              </button>
+              <NavDropdown
+                title={
+                  <img
+                    src={user}
+                    width="40"
+                    height="40"
+                    className="rounded-circle"
+                    alt="User"
+                  />
+                }
+                id="navbarScrollingDropdown"
+              >
+                <NavDropdown.Item as={Link} to="/mylisting">
+                  My Listings
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/myoffer">
+                  My Offers
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/">
+                  Log Out
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      <div className="custom-div">
-        <Container>
-          <Form className="d-flex">
-            <FormControl
-              style={{ backgroundColor: "#f8f8f9" }}
-              type="text"
-              placeholder="Search for anything and everything"
-              className="me-2 custom-input"
-            />
-            <Button
-              style={{ backgroundColor: "#008f79", borderColor: "#008f79" }}
-            >
-              Search
-            </Button>
-          </Form>
-        </Container>
-      </div>
-
-      {/* Login Popup */}
-      <Modal show={showLogin} onHide={handleLoginClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" type="submit" onClick={handleLogin}>
-            Login
-          </Button>
-          <Button variant="secondary" onClick={handleLoginClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      {/* Register Popup */}
-      <Modal show={showRegister} onHide={handleRegisterClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Register</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" type="submit" onClick={handleRegisterClose}>
-            Register
-          </Button>
-          <Button variant="secondary" onClick={handleRegisterClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 }

@@ -1,117 +1,122 @@
-import React, { useEffect, useState } from "react";
-import useFetch from "../hooks/useFetch";
-import { useHistory } from "react-router-dom"; // Add this import
+//register
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import UserContext from "../contexts/user";
+import { jwtDecode } from "jwt-decode";
+import {
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBInput,
+  MDBCheckbox,
+} from "mdb-react-ui-kit";
+import image from "../assets/landingimg.jpg";
 
 const Registration = () => {
-  const fetchData = useFetch();
-  const [roles, setRoles] = useState([]);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-  const history = useHistory(); // Initialize the history object
-
-  const getRoles = async () => {
-    const res = await fetchData("/api/roles"); // Update the API endpoint
-
-    if (res.ok) {
-      setRoles(res.data);
-    } else {
-      console.log(res.data);
-    }
+  const backgroundStyle = {
+    backgroundImage: `url(${image})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    height: "100vh", // Set the background height to cover the entire viewport
+    margin: 0, // Remove margin
+    padding: 0, // Remove padding
   };
 
-  const registerUser = async () => {
-    const res = await fetchData("/api/auth/register", "PUT", {
-      email,
-      password,
-      role,
-    });
+  const colStyle = {
+    padding: "60px", // Add padding to the MDBCol element
+  };
 
-    if (res.ok) {
-      setEmail("");
-      setPassword("");
-      setRole("");
+  const userCtx = useContext(UserContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const navigate = useNavigate();
 
-      // Redirect to the login page after successful registration
-      history.push("/login"); // Replace "/login" with the actual login route
-    } else {
-      console.log(res.data);
+  const handleRegistration = async () => {
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_SERVER + "/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
+
+      if (response.ok) {
+        const userData = await response.json();
+        console.log("Registration successful. User Data:", userData);
+        setRegistrationSuccess(true); // Set registration success state
+        setShowSuccessMessage(true); // Show success message
+      } else {
+        console.error(
+          "Registration error:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Registration error:", error.message);
     }
   };
   useEffect(() => {
-    getRoles();
-  }, []);
+    let timer;
+    if (showSuccessMessage) {
+      timer = setTimeout(() => {
+        navigate("/"); // Navigate to home after the message has been shown
+      }, 3000); // Show the message for 3 seconds
+    }
+
+    return () => clearTimeout(timer);
+  }, [showSuccessMessage, navigate]);
 
   return (
-    <>
-      <br />
-      <div className="row">
-        <div className="col-md-4"></div>
-        <input
-          className="col-md-4"
-          placeholder="email"
-          type="text"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <div className="col-md-4"></div>
-      </div>
-      <div className="row">
-        <div className="col-md-4"></div>
-        <input
-          className="col-md-4"
-          placeholder="password"
-          type="text"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <div className="col-md-4"></div>
-      </div>
-      <div className="row">
-        <div className="col-md-4"></div>
-        <select
-          name="roles"
-          id="roles"
-          className="col-md-4"
-          value={role}
-          onChange={(e) => {
-            setRole(e.target.value);
-          }}
-        >
-          <option value="none">Please Select</option>
-          {roles.map((item) => {
-            return (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            );
-          })}
-        </select>
-        <div className="col-md-4"></div>
-      </div>
-      <div className="row">
-        <div className="col-md-4"></div>
-        <button className="col-md-4" type="submit" onClick={registerUser}>
-          Register
-        </button>
-        <div className="col-md-4"></div>
-      </div>
-      <div className="row">
-        <div className="col-md-4"></div>
-        <button
-          className="col-md-4"
-          type="submit"
-          onClick={() => props.setShowLogin(true)}
-        >
-          Go to login screen
-        </button>
-        <div className="col-md-4"></div>
-      </div>
-    </>
+    <div style={backgroundStyle}>
+      <MDBContainer fluid className="p-0 my-0 h-100">
+        <MDBRow className="h-100 no-gutters">
+          <MDBCol col="4" md="6" style={colStyle}>
+            {!registrationSuccess && (
+              <>
+                <div className="divider d-flex align-items-center my-4"></div>
+                <h1>Register</h1>
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Username"
+                  id="usernameFormControlLg" // Unique ID for username input
+                  type="text"
+                  size="lg"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <MDBInput
+                  wrapperClass="mb-4"
+                  label="Password"
+                  id="passwordFormControlLg" // Unique ID for password input
+                  type="password"
+                  size="lg"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button variant="blue" onClick={handleRegistration}>
+                  Register
+                </button>
+              </>
+            )}
+            {registrationSuccess && (
+              <div>
+                <h1 style={{ fontSize: "70px" }}>
+                  Thank you for the registration!
+                </h1>
+                <p>You will now be redirected to the log-in page.</p>
+              </div>
+            )}
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </div>
   );
 };
 

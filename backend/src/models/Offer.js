@@ -2,13 +2,12 @@ const mongoose = require("mongoose");
 
 const OfferSchema = new mongoose.Schema({
   buyer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
     required: true,
   },
   listing: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Listing",
+    ref: "listing",
     required: true,
   },
   price: {

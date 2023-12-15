@@ -1,30 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import Sell from "./components/Sell";
-// import Login from "./components/Login"; // Assuming you have a Login component
-// import Register from "./components/Register"; // Assuming you have a Register component
+import Register from "./components/Registration";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Login from "./components/Login";
+import Listing from "./components/MyListing";
+import { UserProvider } from "./contexts/user";
+import MyListing from "./components/MyListing";
+import Fashion from "./components/Fashion";
+import Electronics from "./components/Electronics";
+import Admin from "./components/Admin"; // Import the AdminView component
+import ListingDetails from "./components/ListingDetails";
+import OffersList from "./components/OffersList";
+import Offer from "./components/Offer";
+import MyOffer from "./components/MyOffer";
 const App = () => {
-  const [showLogin, setShowLogin] = useState(false);
-
-  const handleLoginShow = () => setShowLogin(true);
-  const handleLoginClose = () => setShowLogin(false);
-
   return (
-    <Router>
-      <NavBar
-        showLogin={showLogin}
-        handleLoginShow={handleLoginShow}
-        handleLoginClose={handleLoginClose}
-      />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sell" element={<Sell />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/admin" element={<Admin />} />{" "}
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/sell" element={<Sell />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/listing" element={<Listing />} />
+          <Route path="/mylisting" element={<MyListing />} />
+          <Route path="/myoffer" element={<MyOffer />} />
+          <Route path="/fashion" element={<Fashion />} />
+          <Route path="/electronics" element={<Electronics />} />
+          <Route path="/listing/:id" element={<ListingDetails />} />
+          <Route path="/offerslist" element={<OffersList />} />
+          <Route path="/offer" element={<Offer />} />
+          <Route path="/myoffer" element={<MyOffer />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 };
 

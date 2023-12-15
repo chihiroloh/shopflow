@@ -1,21 +1,58 @@
+const ListingModel = require("../models/Listing");
+const UserModel = require("../models/User");
+const { auth } = require("../middlewares/auth");
 const express = require("express");
 const router = express.Router();
-const ListingModel = require("../models/Listing"); // Import your Listing model
-const { createListing } = require("../controllers/listing");
-const { auth } = require("../middlewares/auth"); // Import the authentication middleware
-const OfferModel = require("../models/Offer"); // Import your Offer model
 
-// Create a new listing
-router.post("/", auth, createListing);
+// Create a new listing with associated username
+router.post("/", auth, async (req, res) => {
+  try {
+    const { title, description, price, category } = req.body;
+    const userId = req.user.id;
 
-// Get all listings
+    // Fetch the user's username from MongoDB based on their userId
+    const user = await UserModel.findById(userId);
+    const username = user.username;
+
+    // Create a new listing with the user's username
+    const newListing = new ListingModel({
+      title,
+      category,
+      description,
+      price,
+      user: userId,
+      username,
+    });
+
+    await newListing.save();
+
+    res.json(newListing);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Get All listings with associated username
 router.get("/", async (req, res) => {
   try {
-    // Fetch all listings from the database
-    const listings = await ListingModel.find();
+    const listings = await ListingModel.find().populate("user", "username");
 
-    // Send the listings as a JSON response
-    res.json(listings);
+    const formattedListings = listings.map((listing) => {
+      return {
+        _id: listing._id,
+        title: listing.title,
+        category: listing.category,
+        description: listing.description,
+        price: listing.price,
+        username: listing.username,
+        createdAt: listing.createdAt,
+        __v: listing.__v,
+      };
+    });
+
+    // Send the populated listings as a JSON response
+    res.json(formattedListings);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");
@@ -48,7 +85,6 @@ router.put("/:id", auth, async (req, res) => {
       return res.status(404).json({ msg: "Listing not found" });
     }
 
-    // Extract and update the fields you want to modify from the request body
     if (req.body.title) {
       listing.title = req.body.title;
     }
@@ -87,85 +123,6 @@ router.delete("/:id", auth, async (req, res) => {
 
     // Send a success response
     res.json({ msg: "Listing deleted successfully" });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// Create an offer on a listing
-router.post("/:id/offers", auth, async (req, res) => {
-  try {
-    const listing = await ListingModel.findById(req.params.id);
-
-    if (!listing) {
-      return res.status(404).json({ msg: "Listing not found" });
-    }
-
-    const { price } = req.body; // Assuming you want to use 'price' instead of 'amount'
-    const buyer = req.user.id;
-
-    // Create a new offer
-    const offer = new OfferModel({
-      buyer,
-      listing: listing._id,
-      price, // Use 'price' here
-    });
-
-    await offer.save();
-
-    res.json(offer);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// Get offers on a specific listing
-router.get("/:id/offers", auth, async (req, res) => {
-  try {
-    const listing = await ListingModel.findById(req.params.id);
-
-    if (!listing) {
-      return res.status(404).json({ msg: "Listing not found" });
-    }
-
-    // Ensure that the user requesting the offers is the seller of the listing
-    if (listing.user.toString() !== req.user.id) {
-      return res.status(403).json({ msg: "Unauthorized" });
-    }
-
-    // Get all offers for the listing
-    const offers = await OfferModel.find({ listing: listing._id });
-
-    res.json(offers);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// Accept or decline an offer
-router.put("/offers/:id/:status", auth, async (req, res) => {
-  try {
-    const offer = await OfferModel.findById(req.params.id);
-
-    if (!offer) {
-      return res.status(404).json({ msg: "Offer not found" });
-    }
-
-    // Ensure that the user accepting/declining the offer is the seller
-    const listing = await ListingModel.findById(offer.listing);
-    if (listing.user.toString() !== req.user.id) {
-      return res.status(403).json({ msg: "Unauthorized" });
-    }
-
-    // Update the offer status
-    offer.status = req.params.status;
-
-    await offer.save();
-
-    res.json({ msg: "Offer updated successfully" });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");

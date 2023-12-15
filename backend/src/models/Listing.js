@@ -18,15 +18,17 @@ const ListingSchema = new mongoose.Schema({
     required: true,
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    type: String,
     required: true,
+  },
+  username: {
+    type: String,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  images: [String],
+  // images: [String],
 });
 
 module.exports = mongoose.model("listing", ListingSchema);

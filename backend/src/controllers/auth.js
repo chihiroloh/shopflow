@@ -58,7 +58,7 @@ const login = async (req, res) => {
     };
 
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      expiresIn: "20m",
+      expiresIn: "30d", // Change the expiration time to 30 days
       jwtid: uuidv4(),
     });
 
@@ -94,4 +94,76 @@ const refresh = (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, register, login, refresh };
+const getUserInfo = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+
+    const user = await UserModel.findById(decoded.id);
+    if (!user) {
+      return res.status(404).json({ status: "error", msg: "User not found" });
+    }
+
+    res.json({
+      _id: user._id,
+      username: user.username,
+      isAdmin: user.isAdmin,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "Error fetching user information" });
+  }
+};
+
+const updateUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const updatedData = req.body;
+
+    const user = await UserModel.findByIdAndUpdate(userId, updatedData, {
+      new: true,
+    });
+
+    if (!user) {
+      return res.status(404).json({ status: "error", msg: "User not found" });
+    }
+
+    res.json({
+      _id: user._id,
+      username: user.username,
+      isAdmin: user.isAdmin,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "Error updating user" });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const user = await UserModel.findByIdAndDelete(userId);
+
+    if (!user) {
+      return res.status(404).json({ status: "error", msg: "User not found" });
+    }
+
+    res.json({ status: "ok", msg: "User deleted" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(400).json({ status: "error", msg: "Error deleting user" });
+  }
+};
+
+module.exports = {
+  getAllUsers,
+  register,
+  login,
+  refresh,
+  getUserInfo,
+  updateUser,
+  deleteUser,
+};
