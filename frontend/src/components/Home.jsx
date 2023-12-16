@@ -92,7 +92,6 @@ const Home = () => {
                   <p>{listing.description}</p>
                   <p>Price: ${listing.price}</p>
                   <p>Posted by: {listing.username}</p>
-                  {/* Display the username here */}
                 </div>
               </button>
             </Link>

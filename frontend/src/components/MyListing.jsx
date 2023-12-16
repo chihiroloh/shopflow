@@ -21,11 +21,6 @@ const MyListing = () => {
     }
   }, [userCtx.accessToken]);
 
-  // useEffect(() => {
-  //   console.log("userListings:", userListings);
-  //   console.log("userCtx.username:", userCtx.username);
-  // }, [userListings, userCtx.username]);
-
   const fetchUserListings = async () => {
     try {
       const response = await fetch(
@@ -41,7 +36,6 @@ const MyListing = () => {
       }
       const listings = await response.json();
 
-      // Debugging statements
       console.log("Listings received from the server:", listings);
       console.log("User Context Username:", userCtx.username);
 

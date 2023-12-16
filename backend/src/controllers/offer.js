@@ -1,11 +1,13 @@
 const OfferModel = require("../models/offer");
 const ListingModel = require("../models/Listing");
+const UserModel = require("../models/User");
 
 const offerController = {
   createOffer: async (req, res) => {
     try {
-      const { listingId, price } = req.body;
+      const { price } = req.body;
       const buyer = req.user.username;
+      const listingId = req.params.listingId; // Extract listingId from URL parameter
 
       if (!listingId) {
         return res.status(400).send("Listing ID is required.");
@@ -30,6 +32,18 @@ const offerController = {
       const offers = await OfferModel.find({ listing: listingId }).populate(
         "buyer",
         "username"
+      );
+      res.json(offers);
+    } catch (error) {
+      res.status(500).send("Server Error: " + error.message);
+    }
+  },
+
+  getOffersByUser: async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const offers = await OfferModel.find({ buyer: userId }).populate(
+        "listing"
       );
       res.json(offers);
     } catch (error) {

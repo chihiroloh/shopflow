@@ -1,19 +1,30 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
-import { useNavigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
 const Offer = ({ listing_id }) => {
   const [price, setPrice] = useState("");
   const [offerMade, setOfferMade] = useState(false);
+  const [offerDetails, setOfferDetails] = useState(null);
   const userCtx = useContext(UserContext);
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedOfferDetails = localStorage.getItem("offerDetails");
+    if (savedOfferDetails) {
+      const offerData = JSON.parse(savedOfferDetails);
+      // Check if the offer details belong to the current user
+      if (offerData.userId === userCtx.userId) {
+        setOfferDetails(offerData);
+        setOfferMade(true);
+      }
+    }
+  }, [userCtx.userId]);
 
   const submitOffer = async () => {
-    const requestUrl = `${import.meta.env.VITE_SERVER}/api/create`;
-    const requestBody = {
-      listingId: listing_id,
-      price: parseInt(price), // Convert to number
-    };
+    const requestUrl = `${
+      import.meta.env.VITE_SERVER
+    }/api/create/${listing_id}`;
+    const requestBody = { price };
 
     try {
       const response = await fetch(requestUrl, {
@@ -30,17 +41,22 @@ const Offer = ({ listing_id }) => {
       }
 
       const responseData = await response.json();
-
       if (responseData) {
         alert("Offer submitted!");
         setOfferMade(true);
-        setOfferDetails(responseData);
-        navigate("/myoffer", { state: { offerDetails: responseData } });
+        const offerData = {
+          ...responseData,
+          userId: userCtx.userId,
+        };
+        setOfferDetails(offerData);
+
+        // Save to localStorage
+        localStorage.setItem("offerDetails", JSON.stringify(offerData));
       } else {
-        console.log("Failed to make offer");
+        console.log("Failed to make an offer");
       }
     } catch (error) {
-      console.error("Error submitting offer", error.message);
+      console.error("Error submitting an offer", error.message);
     }
   };
 
@@ -53,17 +69,21 @@ const Offer = ({ listing_id }) => {
         placeholder="Your Price Offer"
       />
       <button onClick={submitOffer}>Make Offer</button>
-      {offerMade && (
+      {offerMade && offerDetails && (
         <div>
-          <p>Made Offer</p>
-          {offerDetails && (
+          <hr />
+          <h2>Offer Details</h2>
+          <p>Price: ${offerDetails.price}</p>
+          <p>Status: {offerDetails.status}</p>
+          <p>Created At: {offerDetails.createdAt}</p>
+          {offerDetails.buyer && <p>Buyer: {offerDetails.buyer}</p>}{" "}
+          {/* Display buyer */}
+          {offerDetails.listingDetails && (
             <div>
-              <p>Price: ${offerDetails.price}</p>
-              <p>Status: {offerDetails.status}</p>
-              <p>Created At: {offerDetails.createdAt}</p>
-              {offerDetails.username && (
-                <p>Posted by: {offerDetails.username}</p>
-              )}
+              <hr />
+              <h2>Listing Details</h2>
+              <p>ID: {offerDetails.listingDetails.id}</p>
+              {/* Display other listing details here */}
             </div>
           )}
         </div>
