@@ -7,7 +7,6 @@ const MyListing = () => {
   const [userListings, setUserListings] = useState([]);
   const [showUpdateOverlay, setShowUpdateOverlay] = useState(false);
   const [selectedListing, setSelectedListing] = useState(null);
-
   const [updatedListing, setUpdatedListing] = useState({
     title: "",
     description: "",
@@ -48,9 +47,31 @@ const MyListing = () => {
       // Debugging statement
       console.log("User's own listings:", userOwnedListings);
 
-      setUserListings(userOwnedListings);
+      // Fetch and set offers for each listing
+      const listingsWithOffers = await Promise.all(
+        userOwnedListings.map(async (listing) => {
+          const offersResponse = await fetch(
+            `${import.meta.env.VITE_SERVER}/api/listing/${listing._id}`,
+            {
+              headers: {
+                Authorization: "Bearer " + userCtx.accessToken,
+              },
+            }
+          );
+          if (!offersResponse.ok) {
+            throw new Error(
+              `Failed to fetch offers for listing ${listing._id}`
+            );
+          }
+          const offers = await offersResponse.json();
+          listing.offers = offers; // Add offers to the listing object
+          return listing;
+        })
+      );
+
+      setUserListings(listingsWithOffers);
     } catch (error) {
-      console.error("Error fetching listings:", error);
+      console.error("Error fetching listings and offers:", error);
     }
   };
 
@@ -134,6 +155,41 @@ const MyListing = () => {
       console.error("Error deleting listing:", error);
     }
   };
+  const handleStatusChange = async (listingId, offer, newStatus) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER}/api/update/${offer._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + userCtx.accessToken,
+          },
+          body: JSON.stringify({ status: newStatus }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update the offer status.");
+      }
+
+      // Update the UI dynamically
+      setUserListings((prevListings) =>
+        prevListings.map((listing) =>
+          listing._id === listingId
+            ? {
+                ...listing,
+                offers: listing.offers.map((o) =>
+                  o._id === offer._id ? { ...o, status: newStatus } : o
+                ),
+              }
+            : listing
+        )
+      );
+    } catch (error) {
+      console.error("Error updating offer status:", error);
+    }
+  };
 
   return (
     <div>
@@ -164,6 +220,28 @@ const MyListing = () => {
               >
                 Delete
               </button>
+              <br />
+              <h4>Offers:</h4>
+              <ul>
+                {listing.offers &&
+                  listing.offers.map((offer) => (
+                    <li key={offer?._id}>
+                      <p>Buyer: {offer.buyer}</p>
+                      <p>Price: ${offer.price}</p>
+                      <p>Status: {offer.status}</p>
+                      <select
+                        value={offer.status}
+                        onChange={(e) =>
+                          handleStatusChange(listing._id, offer, e.target.value)
+                        }
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="accepted">Accepted</option>
+                        <option value="declined">Declined</option>
+                      </select>
+                    </li>
+                  ))}
+              </ul>
             </li>
           ))}
         </ul>

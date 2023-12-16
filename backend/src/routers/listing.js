@@ -46,6 +46,7 @@ router.get("/", async (req, res) => {
         description: listing.description,
         price: listing.price,
         username: listing.username,
+        userId: listing.user, // Include userId
         createdAt: listing.createdAt,
         __v: listing.__v,
       };

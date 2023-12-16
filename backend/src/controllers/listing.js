@@ -19,11 +19,13 @@ const createListing = async (req, res) => {
       description,
       price,
       user: userId,
+      username, // Include the username in the listing
     });
 
     await newListing.save();
 
-    res.json(newListing);
+    // Send the response with the new listing, including the seller's username
+    res.json({ listing: newListing, seller: username });
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server Error");

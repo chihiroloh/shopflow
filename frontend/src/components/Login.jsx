@@ -53,7 +53,6 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         userCtx.setAccessToken(data.access);
-        localStorage.removeItem("offerDetails");
 
         // Fetch user info
         const userInfoResponse = await fetch(
@@ -71,7 +70,6 @@ const Login = () => {
           userCtx.setUsername(userInfo.username);
           userCtx.setIsAdmin(userInfo.isAdmin);
           console.log("User info fetched successfully:", userInfo);
-          localStorage.setItem("userId", userInfo._id);
 
           navigate(userInfo.isAdmin ? "/admin" : "/home");
         } else {

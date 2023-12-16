@@ -41,7 +41,7 @@ function NavBar() {
             <Nav>
               {userCtx.isAdmin && (
                 <Button as={Link} to="/admin" variant="primary">
-                  Users
+                  Admin
                 </Button>
               )}
               <button>

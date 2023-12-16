@@ -8,6 +8,7 @@ const getAllUsers = async (req, res) => {
     const users = await UserModel.find();
 
     const outputArray = users.map((user) => ({
+      _id: user._id,
       username: user.username,
       isAdmin: user.isAdmin,
     }));
@@ -120,12 +121,14 @@ const getUserInfo = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const userId = req.params.userId;
+    console.log(`Updating user with ID: ${userId}`);
     const updatedData = req.body;
 
     const user = await UserModel.findByIdAndUpdate(userId, updatedData, {
       new: true,
     });
-
+    console.log("Updated user:", user);
+    console.log("Updated data:", updatedData);
     if (!user) {
       return res.status(404).json({ status: "error", msg: "User not found" });
     }

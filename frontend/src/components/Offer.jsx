@@ -49,9 +49,6 @@ const Offer = ({ listing_id }) => {
           userId: userCtx.userId,
         };
         setOfferDetails(offerData);
-
-        // Save to localStorage
-        localStorage.setItem("offerDetails", JSON.stringify(offerData));
       } else {
         console.log("Failed to make an offer");
       }
