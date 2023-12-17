@@ -4,7 +4,8 @@ const authRouter = require("./src/routers/auth");
 const listingRouter = require("./src/routers/listing");
 const offerRouter = require("./src/routers/offer");
 const cors = require("cors");
-
+const multer = require("multer");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -17,6 +18,23 @@ app.use("/api/listings", listingRouter);
 app.use("/uploads", express.static("uploads"));
 app.use("/api/auth", authRouter);
 app.use("/api", offerRouter);
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/Images");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      file.fieldname + "_" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({
+  storage: storage,
+});
+app.use("/uploads", express.static("uploads"));
 
 const PORT = process.env.PORT || 5001;
 

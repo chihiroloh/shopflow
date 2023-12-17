@@ -1,15 +1,13 @@
-/* .custom-navbar {
-  border-bottom: 1px solid #ccc;
-} */
-/* In your Module.css or custom CSS file */
+#root {
+  font-family: "Geneva", sans-serif;
+}
+
 .custom-input {
   height: 44px; /* Adjust the width as per your requirements */
 }
-/* In your Module.css or custom CSS file */
 .custom-input::placeholder {
   color: #c5c5c6;
 }
-/* In your Module.css or custom CSS file */
 .custom-navbar .me-auto a {
   color: black; /* Set the font color to black */
   margin-right: 10px; /* Adjust the right margin for spacing */
@@ -19,7 +17,6 @@
 .custom-navbar .d-flex.align-items-center .me-auto a:last-child {
   margin-right: 0; /* Remove margin-right for the last link to prevent extra spacing */
 }
-/* In your Module.css or custom CSS file */
 .custom-navbar .d-flex.align-items-center a {
   color: black; /* Set the font color to black */
   margin-right: 10px; /* Adjust the right margin for spacing */
@@ -28,7 +25,6 @@
 .custom-h3 {
   font-size: 24px;
 }
-/* CSS */
 .custom-button {
   background-color: #c2fbd7;
   border-radius: 100px;
@@ -59,13 +55,11 @@
     rgba(44, 187, 99, 0.25) 0 16px 32px;
   transform: scale(1.05) rotate(-1deg);
 }
-/* NavBar.css */
 
 .user-image {
   width: 30px; /* Adjust the width of the user image */
   height: auto; /* Auto height to maintain aspect ratio */
 }
-/* NavBar.css */
 
 .user-button {
   display: inline-block;
@@ -74,13 +68,13 @@
 }
 
 .user-button:hover {
-  opacity: 0.8; /* Reduce opacity on hover for button effect */
+  opacity: 0.8;
 }
 
 .user-image {
-  width: 30px; /* Adjust the width of the user image */
-  height: auto; /* Auto height to maintain aspect ratio */
-  margin-right: 10px; /* Add spacing between user image and icons */
+  width: 30px;
+  height: auto;
+  margin-right: 10px;
 }
 
 .user-icon {
@@ -88,7 +82,6 @@
   height: auto; /* Auto height to maintain aspect ratio */
   margin-right: 10px; /* Add spacing between icons */
 }
-/* Module.css */
 
 .home-content {
   position: relative;
@@ -110,7 +103,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -145,13 +138,11 @@
   font-size: 18px;
   margin-top: 10px;
 }
-/* Module.css */
 
 .small-electronics {
   width: 100px; /* Set the desired width for the image */
   height: auto; /* Maintain aspect ratio by setting height to auto */
 }
-/* Module.css */
 
 .box-container,
 .text-below-content {
@@ -175,13 +166,14 @@
   text-align: center; /* Center the text horizontally */
   color: black;
 }
-/* Module.css */
 
 .text-below-content {
   font-size: 20px;
 }
-.buy-now-text {
+.buy-now-text,
+.text-below {
   color: #742727;
+  font-weight: bolder;
 }
 .bg-custom-1 {
   background-color: #85144b;
@@ -196,4 +188,36 @@
 .text-below {
   font-size: 20px;
   text-align: center;
+}
+.listing-button {
+  width: 100%; /* Full width of the column */
+  height: 200px; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 15px;
+  padding: 10px;
+  overflow: hidden; /* To handle overflow text */
+  background-color: rgba(208, 156, 217, 0.5);
+  border: none; /* Remove the border */
+}
+
+a {
+  text-decoration: none; /* Removes underline */
+  color: inherit;
+  border: none; /* Remove the border */
+}
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none !important;
+  color: inherit;
+}
+.text-below,
+.text-below,
+.hello {
+  font-size: 30px;
 }

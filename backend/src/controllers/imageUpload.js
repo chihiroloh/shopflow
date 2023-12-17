@@ -1,5 +1,6 @@
+const multer = require("multer");
+
 const imageUpload = (req, res) => {
-  // Extract the paths of all uploaded files
   const imagePaths = req.files.map((file) => file.path);
 
   res.json({
@@ -8,3 +9,5 @@ const imageUpload = (req, res) => {
     paths: imagePaths,
   });
 };
+
+module.exports = imageUpload;

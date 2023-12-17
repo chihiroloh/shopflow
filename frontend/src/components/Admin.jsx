@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
+import { Container } from "react-bootstrap";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -114,47 +115,51 @@ const Admin = () => {
     <>
       <NavBar />
       <hr />
-      <div>
-        <h2>All Users</h2>
-        <ul>
-          {users.map((user) => (
-            <li key={user._id}>
-              {editingUserId === user._id ? (
-                <>
-                  <input
-                    type="text"
-                    name="username"
-                    value={editFormData.username}
-                    onChange={handleEditFormChange}
-                  />
-                  <select
-                    name="isAdmin"
-                    value={editFormData.isAdmin ? "true" : "false"}
-                    onChange={handleEditFormChange}
-                  >
-                    <option value="false">User</option>
-                    <option value="true">Admin</option>
-                  </select>
-                  <button
-                    onClick={() => handleUpdateUser(user._id, editFormData)}
-                  >
-                    Save
-                  </button>
-                  <button onClick={() => setEditingUserId(null)}>Cancel</button>
-                </>
-              ) : (
-                <>
-                  {user.username} - {user.isAdmin ? "Admin" : "User"}
-                  <button onClick={() => handleEditClick(user)}>Edit</button>
-                  <button onClick={() => handleDeleteUser(user._id)}>
-                    Delete
-                  </button>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <Container>
+        <div>
+          <h2>All Users</h2>
+          <ul>
+            {users.map((user) => (
+              <li key={user._id}>
+                {editingUserId === user._id ? (
+                  <>
+                    <input
+                      type="text"
+                      name="username"
+                      value={editFormData.username}
+                      onChange={handleEditFormChange}
+                    />
+                    <select
+                      name="isAdmin"
+                      value={editFormData.isAdmin ? "true" : "false"}
+                      onChange={handleEditFormChange}
+                    >
+                      <option value="false">User</option>
+                      <option value="true">Admin</option>
+                    </select>
+                    <button
+                      onClick={() => handleUpdateUser(user._id, editFormData)}
+                    >
+                      Save
+                    </button>
+                    <button onClick={() => setEditingUserId(null)}>
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {user.username} - {user.isAdmin ? "Admin" : "User"}
+                    <button onClick={() => handleEditClick(user)}>Edit</button>
+                    <button onClick={() => handleDeleteUser(user._id)}>
+                      Delete
+                    </button>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Container>
     </>
   );
 };

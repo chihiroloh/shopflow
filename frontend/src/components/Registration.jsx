@@ -1,6 +1,6 @@
 //register
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/user";
 import { jwtDecode } from "jwt-decode";
 import {
@@ -17,13 +17,13 @@ const Registration = () => {
     backgroundImage: `url(${image})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    height: "100vh", // Set the background height to cover the entire viewport
-    margin: 0, // Remove margin
-    padding: 0, // Remove padding
+    height: "100vh",
+    margin: 0,
+    padding: 0,
   };
 
   const colStyle = {
-    padding: "60px", // Add padding to the MDBCol element
+    padding: "60px",
   };
 
   const userCtx = useContext(UserContext);
@@ -66,7 +66,7 @@ const Registration = () => {
     let timer;
     if (showSuccessMessage) {
       timer = setTimeout(() => {
-        navigate("/"); // Navigate to home after the message has been shown
+        navigate("/"); //offer under listing
       }, 3000); // Show the message for 3 seconds
     }
 
@@ -85,7 +85,7 @@ const Registration = () => {
                 <MDBInput
                   wrapperClass="mb-4"
                   label="Username"
-                  id="usernameFormControlLg" // Unique ID for username input
+                  id="usernameFormControlLg"
                   type="text"
                   size="lg"
                   value={username}
@@ -94,7 +94,7 @@ const Registration = () => {
                 <MDBInput
                   wrapperClass="mb-4"
                   label="Password"
-                  id="passwordFormControlLg" // Unique ID for password input
+                  id="passwordFormControlLg"
                   type="password"
                   size="lg"
                   value={password}

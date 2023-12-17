@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import { Container, Nav, Navbar, NavDropdown, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../assets/shopflow.png";
@@ -14,8 +14,7 @@ function NavBar() {
   const handleLogout = () => {
     // Clear user authentication info, but not offer details
     userCtx.clearUserInfo(); // Clears user context
-    localStorage.removeItem("accessToken"); // Example: Clear access token
-    // Do not remove 'offerDetails' here
+    localStorage.removeItem("accessToken"); // clear access token
     navigate("/login");
   };
   return (

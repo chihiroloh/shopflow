@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
+import { Container } from "react-bootstrap";
 
 const MyOffer = () => {
   const [offers, setOffers] = useState([]);
@@ -11,7 +12,7 @@ const MyOffer = () => {
       const response = await fetch(
         `${import.meta.env.VITE_SERVER}/api/cancel/${offerId}`,
         {
-          method: "PATCH", // Use PATCH to cancel the offer
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userCtx.accessToken}`,
@@ -69,24 +70,26 @@ const MyOffer = () => {
     <div>
       <NavBar />
       <hr />
-      <h1>My Offers</h1>
-      {offers.length > 0 ? (
-        offers.map((offer) => (
-          <div key={offer._id}>
-            <p>{offer.listing.title}</p>
-            <p>Price: ${offer.price}</p>
-            <p>Status: {offer.status}</p>
-            {offer.status !== "cancelled" && (
-              <button onClick={() => handleCancelOffer(offer._id)}>
-                Cancel
-              </button>
-            )}
-            <br />
-          </div>
-        ))
-      ) : (
-        <p>You have not made any offers.</p>
-      )}
+      <Container>
+        <h1>My Offers</h1>
+        {offers.length > 0 ? (
+          offers.map((offer) => (
+            <div key={offer._id}>
+              <p>{offer.listing.title}</p>
+              <p>Price: ${offer.price}</p>
+              <p>Status: {offer.status}</p>
+              {offer.status !== "cancelled" && (
+                <button onClick={() => handleCancelOffer(offer._id)}>
+                  Cancel
+                </button>
+              )}
+              <br />
+            </div>
+          ))
+        ) : (
+          <p>You have not made any offers.</p>
+        )}
+      </Container>
     </div>
   );
 };

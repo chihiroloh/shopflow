@@ -1,7 +1,5 @@
-//login
-
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/user";
 import { jwtDecode } from "jwt-decode";
 import {
@@ -19,19 +17,19 @@ const Login = () => {
     backgroundImage: `url(${image})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    height: "100vh", // Set the background height to cover the entire viewport
-    margin: 0, // Remove margin
-    padding: 0, // Remove padding
+    height: "100vh",
+    margin: 0,
+    padding: 0,
   };
   const userCtx = useContext(UserContext);
 
   const colStyle = {
-    padding: "60px", // Add padding to the MDBCol element
+    padding: "60px",
   };
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -104,7 +102,7 @@ const Login = () => {
             <MDBInput
               wrapperClass="mb-4"
               label="username"
-              id="usernameFormControlLg" // Unique ID for username input
+              id="usernameFormControlLg"
               type="text"
               size="lg"
               value={username}

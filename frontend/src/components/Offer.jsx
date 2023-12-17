@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
+import { Container } from "react-bootstrap";
 
 const Offer = ({ listing_id }) => {
   const [price, setPrice] = useState("");
@@ -12,7 +13,7 @@ const Offer = ({ listing_id }) => {
     const savedOfferDetails = localStorage.getItem("offerDetails");
     if (savedOfferDetails) {
       const offerData = JSON.parse(savedOfferDetails);
-      // Check if the offer details belong to the current user
+      // check if the offer details belong to the current user
       if (offerData.userId === userCtx.userId) {
         setOfferDetails(offerData);
         setOfferMade(true);
@@ -59,32 +60,34 @@ const Offer = ({ listing_id }) => {
 
   return (
     <div>
-      <input
-        type="number"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        placeholder="Your Price Offer"
-      />
-      <button onClick={submitOffer}>Make Offer</button>
-      {offerMade && offerDetails && (
-        <div>
-          <hr />
-          <h2>Offer Details</h2>
-          <p>Price: ${offerDetails.price}</p>
-          <p>Status: {offerDetails.status}</p>
-          <p>Created At: {offerDetails.createdAt}</p>
-          {offerDetails.buyer && <p>Buyer: {offerDetails.buyer}</p>}{" "}
-          {/* Display buyer */}
-          {offerDetails.listingDetails && (
-            <div>
-              <hr />
-              <h2>Listing Details</h2>
-              <p>ID: {offerDetails.listingDetails.id}</p>
-              {/* Display other listing details here */}
-            </div>
-          )}
-        </div>
-      )}
+      <Container>
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="Your Price Offer"
+        />
+        <button onClick={submitOffer}>Make Offer</button>
+        {offerMade && offerDetails && (
+          <div>
+            <hr />
+            <h2>Offer Details</h2>
+            <p>Price: ${offerDetails.price}</p>
+            <p>Status: {offerDetails.status}</p>
+            <p>Created At: {offerDetails.createdAt}</p>
+            {offerDetails.buyer && <p>Buyer: {offerDetails.buyer}</p>}{" "}
+            {/* Display buyer */}
+            {offerDetails.listingDetails && (
+              <div>
+                <hr />
+                <h2>Listing Details</h2>
+                <p>ID: {offerDetails.listingDetails.id}</p>
+                {/* Display other listing details here */}
+              </div>
+            )}
+          </div>
+        )}
+      </Container>
     </div>
   );
 };
