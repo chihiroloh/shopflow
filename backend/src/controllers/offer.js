@@ -6,9 +6,9 @@ const offerController = {
   createOffer: async (req, res) => {
     try {
       const { price } = req.body;
-      const buyerId = req.user.id; // Authenticated user's ID
+      const buyerId = req.user.id;
       const buyer = req.user.username;
-      const listingId = req.params.listingId; // Extract listingId from URL parameter
+      const listingId = req.params.listingId;
 
       if (!listingId) {
         return res.status(400).send("Listing ID is required.");
@@ -45,7 +45,7 @@ const offerController = {
   },
   getOffersByUser: async (req, res) => {
     try {
-      const { userId } = req.params; // Get the user ID from the URL parameter
+      const { userId } = req.params;
       const offers = await OfferModel.find({ buyerId: userId }).populate(
         "listing"
       );
@@ -66,7 +66,7 @@ const offerController = {
 
       console.log("Received status:", status);
 
-      // Use populate to retrieve the offer with the associated listing and its user
+      // use populate to retrieve the offer with the associated listing and its user
       const offer = await OfferModel.findById(offerId).populate("listing");
 
       if (!offer) {
@@ -82,7 +82,6 @@ const offerController = {
         return res.status(400).send("Offer has no associated listing");
       }
 
-      // Log the user IDs for debugging
       console.log("User ID:", req.user.id);
       console.log("Listing Owner ID:", offer.listing.user);
 
@@ -94,10 +93,10 @@ const offerController = {
         console.log("Unauthorized to update this offer");
         return res.status(403).send("Unauthorized to update this offer");
       } else {
-        console.log("User is authorized"); // Added console log here
+        console.log("User is authorized");
       }
 
-      console.log("After the 'if' condition check"); // Added console log here
+      console.log("After the 'if' condition check");
 
       offer.status = status;
 
@@ -122,11 +121,10 @@ const offerController = {
         return res.status(404).send("Offer not found");
       }
 
-      // Debugging statements
       console.log("req.user:", req.user);
       console.log("offer.buyerId:", offer.buyerId);
 
-      // Check if the request is made by the offer's owner or an authorized user
+      // check if the request is made by the offer's owner or an authorized user
       if (req.user.id.toString() !== offer.buyerId.toString()) {
         console.log("Unauthorized to delete this offer");
         return res.status(403).send("Unauthorized to delete this offer");
