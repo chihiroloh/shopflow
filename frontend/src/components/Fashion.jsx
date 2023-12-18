@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
-import { Container } from "react-bootstrap";
-
+import { Container, Col, Row, Image } from "react-bootstrap";
+import fashionheader from "../assets/fashionheader.png";
 const Fashion = () => {
   const [listings, setListings] = useState([]);
 
@@ -36,25 +36,28 @@ const Fashion = () => {
   return (
     <div>
       <NavBar />
-      <hr />
+      <Image src={fashionheader} fluid />
       <Container>
-        <h1>Fashion Listings</h1>
-        <ul>
+        <br />
+        <Row>
           {listings.map((listing) => (
-            <Link key={listing._id} to={`/listing/${listing._id}`}>
-              <button className="listing-button">
-                <div className="listing">
-                  <h5>{listing.title}</h5>
-                  <p>{listing.description}</p>
-                  <p>Price: ${listing.price}</p>
-                  <p>Posted by: {listing.username}</p>
-                </div>
-              </button>
-            </Link>
+            <Col key={listing._id} xs={12} sm={6} md={4} lg={3}>
+              <Link to={`/listing/${listing._id}`}>
+                <button className="listing-button">
+                  <div className="listing">
+                    <h4>{listing.title}</h4>
+                    <p>{listing.description}</p>
+                    <p>Price: ${listing.price}</p>
+                    <p>Posted by: {listing.username}</p>
+                  </div>
+                </button>
+              </Link>
+            </Col>
           ))}
-        </ul>
+        </Row>
       </Container>
     </div>
   );
 };
+
 export default Fashion;

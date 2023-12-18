@@ -148,12 +148,19 @@
 .text-below-content {
   text-align: left; /* Center the content horizontally */
 }
-
+.box-container {
+  border: none;
+}
 .button-like {
-  border: 2px solid #742727; /* Border style and color */
-  background-color: #f0f0f0; /* Background color */
-  padding: 10px; /* Add padding inside the box */
-  display: inline-block; /* Keeps the box inline with other content */
+  border: 2px solid #742727;
+  background-color: white;
+  padding: 10px;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.button-like:hover {
+  background-color: rgba(208, 156, 217, 0.5);
 }
 
 .button-like img {
@@ -201,16 +208,19 @@
   padding: 10px;
   overflow: hidden; /* To handle overflow text */
   background-color: rgba(208, 156, 217, 0.5);
-  border: none; /* Remove the border */
+  border: none;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
-
+.listing-button:hover {
+  background-color: #85144b;
+  color: white;
+}
 a {
   text-decoration: none; /* Removes underline */
   color: inherit;
   border: none; /* Remove the border */
 }
 a,
-a:hover,
 a:focus,
 a:active {
   text-decoration: none !important;
@@ -221,3 +231,6 @@ a:active {
 .hello {
   font-size: 30px;
 }
+/* .homepage {
+  background-color: rgba(208, 156, 217, 0.5);
+} */

@@ -9,7 +9,7 @@ import UserContext from "../contexts/user";
 
 function NavBar() {
   const userCtx = useContext(UserContext);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     // Clear user authentication info, but not offer details
@@ -17,6 +17,7 @@ function NavBar() {
     localStorage.removeItem("accessToken"); // clear access token
     navigate("/login");
   };
+
   return (
     <div className="nav-wrapper">
       <Navbar expand="sm" className="custom-navbar">
@@ -37,18 +38,25 @@ function NavBar() {
                 Fashion
               </Link>
             </Nav>
-            <Nav>
+            <Nav className="ml-auto">
               {userCtx.isAdmin && (
-                <Button as={Link} to="/admin" variant="primary">
+                <Button
+                  as={Link}
+                  to="/admin"
+                  className="nav-link"
+                  style={{ backgroundColor: "transparent", border: "none" }}
+                >
                   Admin
                 </Button>
               )}
-              <button>
-                <Link to="/sell">Sell</Link>
-              </button>
-              <button>
-                <Link to="/home">Buy</Link>
-              </button>
+              <Link to="/sell" className="nav-link">
+                Sell
+              </Link>
+              <Link to="/home" className="nav-link">
+                Buy
+              </Link>
+            </Nav>
+            <Nav>
               <NavDropdown
                 title={
                   <img

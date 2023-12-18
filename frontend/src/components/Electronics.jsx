@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
-import { Container } from "react-bootstrap";
+import { Container, Col, Row, Image } from "react-bootstrap";
+import electronicsheader from "../assets/electronicsheader.png";
 
 const Electronics = () => {
   const [listings, setListings] = useState([]);
@@ -36,23 +37,25 @@ const Electronics = () => {
   return (
     <div>
       <NavBar />
-      <hr />
+      <Image src={electronicsheader} fluid style={{ maxWidth: "100%" }} />
       <Container>
-        <h1>Electronics Listings</h1>
-        <ul>
+        <br />
+        <Row>
           {listings.map((listing) => (
-            <Link key={listing._id} to={`/listing/${listing._id}`}>
-              <button className="listing-button">
-                <div className="listing">
-                  <h5>{listing.title}</h5>
-                  <p>{listing.description}</p>
-                  <p>Price: ${listing.price}</p>
-                  <p>Posted by: {listing.username}</p>
-                </div>
-              </button>
-            </Link>
+            <Col key={listing._id} xs={12} sm={6}>
+              <Link to={`/listing/${listing._id}`}>
+                <button className="listing-button">
+                  <div className="listing">
+                    <h5>{listing.title}</h5>
+                    <p>{listing.description}</p>
+                    <p>Price: ${listing.price}</p>
+                    <p>Posted by: {listing.username}</p>
+                  </div>
+                </button>
+              </Link>
+            </Col>
           ))}
-        </ul>
+        </Row>
       </Container>
     </div>
   );

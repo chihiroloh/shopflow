@@ -13,7 +13,7 @@ import Fashion from "./components/Fashion";
 import Electronics from "./components/Electronics";
 import Admin from "./components/Admin"; // Import the AdminView component
 import ListingDetails from "./components/ListingDetails";
-import OffersList from "./components/OffersList";
+// import OffersList from "./components/OffersList";
 import Offer from "./components/Offer";
 import MyOffer from "./components/MyOffer";
 const App = () => {
@@ -32,7 +32,7 @@ const App = () => {
           <Route path="/fashion" element={<Fashion />} />
           <Route path="/electronics" element={<Electronics />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
-          <Route path="/offerslist" element={<OffersList />} />
+          {/* <Route path="/offerslist" element={<OffersList />} /> */}
           <Route path="/offer" element={<Offer />} />
           <Route path="/myoffer" element={<MyOffer />} />
         </Routes>
