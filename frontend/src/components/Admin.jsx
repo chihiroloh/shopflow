@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 import { Container } from "react-bootstrap";
 
 const Admin = () => {
@@ -115,12 +116,18 @@ const Admin = () => {
     <>
       <NavBar />
       <hr />
-      <Container>
-        <div>
+      <Container style={{ flex: "1" }}>
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <h2>All Users</h2>
           <ul>
             {users.map((user) => (
-              <li key={user._id}>
+              <li key={user._id} style={{ marginBottom: "10px" }}>
                 {editingUserId === user._id ? (
                   <>
                     <input
@@ -137,22 +144,28 @@ const Admin = () => {
                       <option value="false">User</option>
                       <option value="true">Admin</option>
                     </select>
-                    <button
-                      onClick={() => handleUpdateUser(user._id, editFormData)}
-                    >
-                      Save
-                    </button>
-                    <button onClick={() => setEditingUserId(null)}>
-                      Cancel
-                    </button>
+                    <div style={{ display: "block" }}>
+                      <button
+                        onClick={() => handleUpdateUser(user._id, editFormData)}
+                      >
+                        Save
+                      </button>
+                      <button onClick={() => setEditingUserId(null)}>
+                        Cancel
+                      </button>
+                    </div>
                   </>
                 ) : (
                   <>
                     {user.username} - {user.isAdmin ? "Admin" : "User"}
-                    <button onClick={() => handleEditClick(user)}>Edit</button>
-                    <button onClick={() => handleDeleteUser(user._id)}>
-                      Delete
-                    </button>
+                    <div style={{ display: "block" }}>
+                      <button onClick={() => handleEditClick(user)}>
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteUser(user._id)}>
+                        Delete
+                      </button>
+                    </div>
                   </>
                 )}
               </li>
@@ -160,6 +173,7 @@ const Admin = () => {
           </ul>
         </div>
       </Container>
+      <Footer />
     </>
   );
 };

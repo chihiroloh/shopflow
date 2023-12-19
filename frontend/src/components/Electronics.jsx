@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import electronicsheader from "../assets/electronicsheader.png";
 
@@ -35,7 +36,14 @@ const Electronics = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {" "}
       <NavBar />
       <Image src={electronicsheader} fluid style={{ maxWidth: "100%" }} />
       <Container>
@@ -57,6 +65,8 @@ const Electronics = () => {
           ))}
         </Row>
       </Container>
+      <br />
+      <Footer />
     </div>
   );
 };

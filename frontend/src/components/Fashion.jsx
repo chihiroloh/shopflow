@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import fashionheader from "../assets/fashionheader.png";
 const Fashion = () => {
@@ -34,7 +35,14 @@ const Fashion = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {" "}
       <NavBar />
       <Image src={fashionheader} fluid />
       <Container>
@@ -56,6 +64,8 @@ const Fashion = () => {
           ))}
         </Row>
       </Container>
+      <br />
+      <Footer />
     </div>
   );
 };

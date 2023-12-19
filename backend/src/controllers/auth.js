@@ -105,11 +105,6 @@ const getUserInfo = async (req, res) => {
       return res.status(404).json({ status: "error", msg: "User not found" });
     }
 
-    // Check if the user is an admin
-    if (!user.isAdmin) {
-      return res.status(403).json({ status: "error", msg: "Access denied" });
-    }
-
     res.json({
       _id: user._id,
       username: user.username,

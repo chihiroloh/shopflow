@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 import { Container } from "react-bootstrap";
 
 const MyOffer = () => {
@@ -90,6 +91,8 @@ const MyOffer = () => {
           <p>You have not made any offers.</p>
         )}
       </Container>
+      <br />
+      <Footer />
     </div>
   );
 };

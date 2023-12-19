@@ -1,7 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import Footer from "./Footer";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  Card,
+  Carousel,
+} from "react-bootstrap";
+import "./Module.css";
 
 const MyListing = () => {
   const userCtx = useContext(UserContext);
@@ -199,15 +209,21 @@ const MyListing = () => {
           <Row>
             {userListings.map((listing) => (
               <React.Fragment key={listing._id}>
-                <Col xs={12} md={6}>
+                <Col xs={12} md={6} className="listing-col">
                   <h3>{listing.title}</h3>
                   <p>{listing.description}</p>
                   <p>Price: ${listing.price}</p>
                   <p>Category: {listing.category}</p>
-                  <Button onClick={() => handleUpdateClick(listing)}>
+                  <Button
+                    id="btn-update"
+                    className="none"
+                    onClick={() => handleUpdateClick(listing)}
+                  >
                     Update
                   </Button>
                   <Button
+                    id="btn-cancel"
+                    className="none"
                     onClick={() => {
                       if (
                         window.confirm(
@@ -221,114 +237,167 @@ const MyListing = () => {
                     Delete
                   </Button>
                 </Col>
+
+                {/* offer */}
                 <Col xs={12} md={6}>
-                  <h4>Offers:</h4>
-                  <ul>
-                    {listing.offers && listing.offers.length > 0 ? (
-                      listing.offers.map((offer) => (
-                        <li key={offer?._id}>
-                          <p>Buyer: {offer.buyer}</p>
-                          <p>Price: ${offer.price}</p>
-                          <p>Status: {offer.status}</p>
-                          <select
-                            value={offer.status}
-                            onChange={(e) =>
-                              handleStatusChange(
-                                listing._id,
-                                offer,
-                                e.target.value
-                              )
-                            }
-                          >
-                            <option value="pending">Pending</option>
-                            <option value="accepted">Accepted</option>
-                            <option value="declined">Declined</option>
-                          </select>
-                        </li>
-                      ))
-                    ) : (
-                      <p>No offers yet</p>
-                    )}
-                  </ul>
+                  <div className="card border-success mb-3">
+                    <div className="card-header">
+                      Offers for {listing.title}
+                    </div>
+                    <div className="card-body text-success">
+                      {listing.offers && listing.offers.length > 0 ? (
+                        <Carousel className="custom-carousel">
+                          {listing.offers.map((offer) => (
+                            <Carousel.Item key={offer?._id}>
+                              <div>
+                                <p>
+                                  <b>Buyer:</b> {offer.buyer}
+                                </p>
+                                <p>
+                                  <b>Price:</b> ${offer.price}
+                                </p>
+                                <p>
+                                  <b>Current status:</b> {offer.status}
+                                </p>
+                                <label htmlFor={`status-${offer._id}`}>
+                                  <b>Update status:</b>
+                                </label>
+                                <select
+                                  className="form-select form-select-sm"
+                                  aria-label=".form-select-sm example"
+                                  value={offer.status}
+                                  onChange={(e) =>
+                                    handleStatusChange(
+                                      listing._id,
+                                      offer,
+                                      e.target.value
+                                    )
+                                  }
+                                >
+                                  <option value="pending">Pending</option>
+                                  <option value="accepted">Accept</option>
+                                  <option value="declined">Decline</option>
+                                </select>
+                              </div>
+                            </Carousel.Item>
+                          ))}
+                        </Carousel>
+                      ) : (
+                        <p>No offers yet</p>
+                      )}
+                    </div>
+                  </div>
                 </Col>
               </React.Fragment>
             ))}
           </Row>
         )}
-
         {showUpdateOverlay && (
           <div className="overlay">
             <div className="update-form">
-              <h2>Update Listing</h2>
+              <h2 class="text-center">Update Listing</h2>
+              <br />
               <form onSubmit={handleUpdateSubmit}>
-                <input
-                  type="text"
-                  name="title"
-                  value={updatedListing.title}
-                  onChange={(e) =>
-                    setUpdatedListing({
-                      ...updatedListing,
-                      title: e.target.value,
-                    })
-                  }
-                  placeholder="Title"
-                  required
-                />
-                <input
-                  type="text"
-                  name="description"
-                  value={updatedListing.description}
-                  onChange={(e) =>
-                    setUpdatedListing({
-                      ...updatedListing,
-                      description: e.target.value,
-                    })
-                  }
-                  placeholder="Description"
-                  required
-                />
-                <input
-                  type="number"
-                  name="price"
-                  value={updatedListing.price}
-                  onChange={(e) =>
-                    setUpdatedListing({
-                      ...updatedListing,
-                      price: e.target.value,
-                    })
-                  }
-                  placeholder="Price"
-                  required
-                />
-                <select
-                  name="category"
-                  value={updatedListing.category}
-                  onChange={(e) =>
-                    setUpdatedListing({
-                      ...updatedListing,
-                      category: e.target.value,
-                    })
-                  }
-                  required
-                >
-                  <input
-                    type="file"
-                    onChange={(e) => setFile(e.target.files[0])}
-                  />
-                  <button onClick={handleUpload}>Upload</button>
-                  <option value="">Select Category</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Fashion">Fashion</option>
-                </select>
-                <button type="submit">Update Listing</button>
-                <button type="button" onClick={handleUpdateCancel}>
-                  Cancel
-                </button>
+                <div className="overlay-input">
+                  <Form.Group className="mb-3" controlId="formBasicTitle">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="title"
+                      value={updatedListing.title}
+                      onChange={(e) =>
+                        setUpdatedListing({
+                          ...updatedListing,
+                          title: e.target.value,
+                        })
+                      }
+                      placeholder="Title"
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group
+                    className="mb-3"
+                    controlId="exampleForm.ControlTextarea1"
+                  >
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      name="description"
+                      value={updatedListing.description}
+                      onChange={(e) =>
+                        setUpdatedListing({
+                          ...updatedListing,
+                          description: e.target.value,
+                        })
+                      }
+                      placeholder="Description"
+                      required
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicPrice">
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="price"
+                      value={updatedListing.price}
+                      onChange={(e) =>
+                        setUpdatedListing({
+                          ...updatedListing,
+                          price: e.target.value,
+                        })
+                      }
+                      placeholder="Price"
+                      required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicCategory">
+                    <Form.Label>Category</Form.Label>
+                    <Form.Select
+                      name="category"
+                      value={updatedListing.category}
+                      onChange={(e) =>
+                        setUpdatedListing({
+                          ...updatedListing,
+                          category: e.target.value,
+                        })
+                      }
+                      required
+                    >
+                      <option value="">Select Category</option>
+                      <option value="Electronics">Electronics</option>
+                      <option value="Fashion">Fashion</option>
+                    </Form.Select>
+                  </Form.Group>
+                </div>
+
+                <div className="updatelist">
+                  <button
+                    id="update-btn"
+                    className="btn btn-outline-success"
+                    type="submit"
+                  >
+                    Update Listing
+                  </button>
+
+                  <button
+                    id="cancel-btn"
+                    className="btn btn-outline-danger"
+                    type="button"
+                    onClick={handleUpdateCancel}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </form>
             </div>
           </div>
         )}
       </Container>
+      <br />
+      <Footer />
     </div>
   );
 };

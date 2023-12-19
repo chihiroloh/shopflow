@@ -6,11 +6,8 @@ import header from "../assets/headerimg.jpg";
 import electronics from "../assets/electronics.png";
 import fashion from "../assets/fashion.png";
 import NavBar from "./NavBar";
+import Footer from "./Footer";
 import "./Module.css";
-import logo from "../assets/logo.png";
-import ig from "../assets/ig.png";
-import x from "../assets/x.png";
-import fb from "../assets/fb.png";
 
 const Home = () => {
   const userCtx = useContext(UserContext);
@@ -119,83 +116,7 @@ const Home = () => {
           </Row>
         </Container>
       </div>
-
-      {/* footer */}
-      <footer className="bg-dark text-white py-3">
-        <Container>
-          {/* Top Section */}
-          <Row>
-            <Col md={10} lg={3} className="mb-4">
-              <div className="mb-3">
-                <a href="index.html">
-                  <Image src={logo} fluid className="w-25" />
-                </a>
-              </div>
-              {/* Social Links */}
-              <div>
-                <h5>Follow us</h5>
-                <ul className="list-unstyled d-flex">
-                  {/* Social Icons */}
-                  <li>
-                    <a href="#" className="text-white me-2">
-                      <i className="fa fa-facebook">
-                        <img src={fb} alt="Facebook" />
-                      </i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-white me-2">
-                      <i className="fa fa-twitter">
-                        <img src={x} alt="Twitter" />
-                      </i>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-white me-2">
-                      <i className="fa fa-instagram">
-                        <img src={ig} alt="Instagram" />
-                      </i>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </Col>
-
-            <Col md={12} lg={8}>
-              <Row>
-                {/* Contact Section */}
-                <Col md={6} className="mb-4">
-                  <div>
-                    <i className="fa fa-map-o" aria-hidden="true"></i>
-                    <div>
-                      <h5>Orchard Road, Singapore</h5>
-                      <p>123 Orchard Avenue</p>
-                      <br />
-                      <p>About</p>
-                      <p>Privacy & Policy</p>
-                      <p>Terms & Condition</p>
-                    </div>
-                  </div>
-                </Col>
-                {/* Subscribe Section */}
-                <Col md={6} className="mb-4">
-                  <h5>Subscribe</h5>
-                  <p>Be up to date in the latest deals and offers!</p>
-                  <Form>
-                    <Form.Group controlId="formBasicEmail">
-                      <Form.Control type="email" placeholder="Email Address" />
-                    </Form.Group>
-                    <br />
-                    <Button variant="primary" type="submit">
-                      Subscribe
-                    </Button>
-                  </Form>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        </Container>
-      </footer>
+      <Footer />
     </div>
   );
 };
