@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom"; // assuming you are using react-router for navigation
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
-import { Container, Row, Col, Button, Card } from "react-bootstrap"; // Importing necessary Bootstrap components
-import "./Module.css";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import profile from "../assets/profile.jpeg";
 import Footer from "./Footer";
@@ -59,7 +58,7 @@ const Profile = () => {
             );
           }
           const offers = await offersResponse.json();
-          listing.offers = offers; // Add offers to the listing object
+          listing.offers = offers;
           return listing;
         })
       );
@@ -71,7 +70,6 @@ const Profile = () => {
   };
 
   const navigateToListingPage = (listingId) => {
-    // Navigate to the listing page
     navigate(`/listing/${listingId}`);
   };
 
@@ -123,7 +121,7 @@ const Profile = () => {
                         style={{
                           flex: "1",
                           margin: "10px",
-                          flexBasis: "calc(25% - 20px)", // Adjusted for margin
+                          flexBasis: "calc(25% - 20px)",
                         }}
                       >
                         <div className="listing">

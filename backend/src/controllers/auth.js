@@ -123,7 +123,6 @@ const updateUser = async (req, res) => {
     const userId = req.params.userId;
     console.log(`Updating user with ID: ${userId}`);
 
-    // verify the requesting user is an admin
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
     const requestingUser = await UserModel.findById(decoded.id);
@@ -132,7 +131,6 @@ const updateUser = async (req, res) => {
       return res.status(403).json({ status: "error", msg: "Access denied" });
     }
 
-    // proceed with the update
     const updatedData = req.body;
     const user = await UserModel.findByIdAndUpdate(userId, updatedData, {
       new: true,
@@ -152,6 +150,7 @@ const updateUser = async (req, res) => {
     res.status(400).json({ status: "error", msg: "Error updating user" });
   }
 };
+
 const updateUserAdminPrivilege = async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -190,7 +189,6 @@ const deleteUser = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    // verify if the requester is an admin
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
     const requestingUser = await UserModel.findById(decoded.id);
@@ -199,7 +197,6 @@ const deleteUser = async (req, res) => {
       return res.status(403).json({ status: "error", msg: "Access denied" });
     }
 
-    // proceed with deletion
     const user = await UserModel.findByIdAndDelete(userId);
 
     if (!user) {

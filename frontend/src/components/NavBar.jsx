@@ -12,9 +12,8 @@ function NavBar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Clear user authentication info, but not offer details
-    userCtx.clearUserInfo(); // Clears user context
-    localStorage.removeItem("accessToken"); // clear access token
+    userCtx.clearUserInfo();
+    localStorage.removeItem("accessToken");
     navigate("/login");
   };
 

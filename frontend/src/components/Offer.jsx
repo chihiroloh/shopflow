@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import "./Module.css";
 
 const Offer = ({ listing_id }) => {
   const [price, setPrice] = useState("");
@@ -13,7 +14,7 @@ const Offer = ({ listing_id }) => {
     const savedOfferDetails = localStorage.getItem("offerDetails");
     if (savedOfferDetails) {
       const offerData = JSON.parse(savedOfferDetails);
-      // check if the offer details belong to the current user
+
       if (offerData.userId === userCtx.userId) {
         setOfferDetails(offerData);
         setOfferMade(true);
@@ -59,18 +60,24 @@ const Offer = ({ listing_id }) => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <input
         type="number"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
         placeholder="Your Price Offer"
-        style={{ marginRight: "10px" }} // Adding right margin to the input
+        style={{ marginRight: "10px" }}
       />
       <button
         onClick={submitOffer}
-        className="btn btn-outline-success" // Apply the same style as the "Create Listing" button
-        style={{ marginBottom: "10px" }} // Adding bottom margin to the button
+        className="btn btn-outline-success"
+        style={{ marginBottom: "10px" }}
       >
         Make Offer
       </button>
@@ -89,7 +96,6 @@ const Offer = ({ listing_id }) => {
           </Card.Body>
         </Card>
       )}
-
       {/* Separate Row for Listing Details */}
       {offerMade && offerDetails && offerDetails.listingDetails && (
         <Row className="mt-3">

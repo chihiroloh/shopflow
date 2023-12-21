@@ -1,8 +1,6 @@
-//register
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/user";
-import { jwtDecode } from "jwt-decode";
 import {
   MDBContainer,
   MDBCol,
@@ -26,7 +24,6 @@ const Registration = () => {
     padding: "60px",
   };
 
-  const userCtx = useContext(UserContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
@@ -49,8 +46,8 @@ const Registration = () => {
       if (response.ok) {
         const userData = await response.json();
         console.log("Registration successful. User Data:", userData);
-        setRegistrationSuccess(true); // Set registration success state
-        setShowSuccessMessage(true); // Show success message
+        setRegistrationSuccess(true);
+        setShowSuccessMessage(true);
       } else {
         console.error(
           "Registration error:",
@@ -66,10 +63,9 @@ const Registration = () => {
     let timer;
     if (showSuccessMessage) {
       timer = setTimeout(() => {
-        navigate("/"); //offer under listing
-      }, 3000); // Show the message for 3 seconds
+        navigate("/");
+      }, 3000);
     }
-
     return () => clearTimeout(timer);
   }, [showSuccessMessage, navigate]);
 

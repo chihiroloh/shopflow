@@ -1,7 +1,7 @@
 SHOPFLOW
 Overview
 
-- ShopFlow is a buy and sell website, allowing users to make an offer on a listing. Users are able to deal and auction their items with ease.
+- ShopFlow is a buy and sell website, allowing users to deal easily by making offer on listings and choosing whether to accept or decline the offer.
 
 Features
 
@@ -48,10 +48,10 @@ Each Listing is associated with a User.
 Each Offer is linked to a Listing and a User (as buyer).
 
 Environment Variables
-PORT - Port number for the server (e.g., 5001)
+PORT - 5001
 DATABASE - Connection string for MongoDB (e.g., mongodb://127.0.0.1:27017/Carousell)
-ACCESS_SECRET - Secret key for access token in JWT
-REFRESH_SECRET - Secret key for refresh token in JWT
+ACCESS_SECRET
+REFRESH_SECRET
 
 API Endpoints
 Auth Routes

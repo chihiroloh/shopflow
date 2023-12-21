@@ -1,11 +1,9 @@
 const ListingModel = require("../models/Listing");
-const UserModel = require("../models/User");
 
 const createListing = async (req, res) => {
   try {
     const { title, description, price, category } = req.body;
     const userId = req.user.id;
-    // const images = req.files.map((file) => file.path);
 
     if (!req.user.username) {
       return res.status(400).send("User name is required");
@@ -42,7 +40,6 @@ const getAllListings = async (req, res) => {
       username: listing.username,
       userId: listing.user,
       createdAt: listing.createdAt,
-      __v: listing.__v,
     }));
 
     res.json(formattedListings);

@@ -8,24 +8,24 @@ body {
 }
 
 .custom-input {
-  height: 44px; /* Adjust the width as per your requirements */
+  height: 44px;
 }
 .custom-input::placeholder {
   color: #c5c5c6;
 }
 .custom-navbar .me-auto a {
-  color: black; /* Set the font color to black */
-  margin-right: 10px; /* Adjust the right margin for spacing */
-  text-decoration: none; /* Remove underline from links */
+  color: black;
+  margin-right: 10px;
+  text-decoration: none;
 }
 
 .custom-navbar .d-flex.align-items-center .me-auto a:last-child {
-  margin-right: 0; /* Remove margin-right for the last link to prevent extra spacing */
+  margin-right: 0;
 }
 .custom-navbar .d-flex.align-items-center a {
-  color: black; /* Set the font color to black */
-  margin-right: 10px; /* Adjust the right margin for spacing */
-  text-decoration: none; /* Remove underline from links */
+  color: black;
+  margin-right: 10px;
+  text-decoration: none;
 }
 .custom-h3 {
   font-size: 24px;
@@ -62,8 +62,8 @@ body {
 }
 
 .user-image {
-  width: 30px; /* Adjust the width of the user image */
-  height: auto; /* Auto height to maintain aspect ratio */
+  width: 30px;
+  height: auto;
 }
 
 .user-button {
@@ -83,9 +83,9 @@ body {
 }
 
 .user-icon {
-  width: 24px; /* Adjust the width of the icons */
-  height: auto; /* Auto height to maintain aspect ratio */
-  margin-right: 10px; /* Add spacing between icons */
+  width: 24px;
+  height: auto;
+  margin-right: 10px;
 }
 
 .home-content {
@@ -145,13 +145,13 @@ body {
 }
 
 .small-electronics {
-  width: 100px; /* Set the desired width for the image */
-  height: auto; /* Maintain aspect ratio by setting height to auto */
+  width: 100px;
+  height: auto;
 }
 
 .box-container,
 .text-below-content {
-  text-align: left; /* Center the content horizontally */
+  text-align: left;
 }
 .box-container {
   border: none;
@@ -169,13 +169,12 @@ body {
 }
 
 .button-like img {
-  display: block; /* Center the image horizontally */
-  margin: 0 auto; /* Center the image horizontally */
+  display: block;
+  margin: 0 auto;
 }
 
 .box-text {
-  /* Remove any previous styling, if needed */
-  text-align: center; /* Center the text horizontally */
+  text-align: center;
   color: black;
 }
 
@@ -304,15 +303,15 @@ a:active {
   margin-right: 10px;
 }
 #btn-update {
-  background-color: #198754; /* Bootstrap success color */
-  color: white; /* Text color for the button */
+  background-color: #198754;
+  color: white;
   border: none;
-  padding: 0.375rem 0.75rem; /* Bootstrap's default padding for buttons */
-  border-radius: 0.25rem; /* Bootstrap's default border-radius */
-  font-size: 1rem; /* Default font size */
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 1rem;
   box-shadow: 0 10px 15px -3px rgba(25, 135, 84, 0.5),
     0 4px 6px -2px rgba(25, 135, 84, 0.5);
-  transition: all 0.2s; /* Add transition for smooth hover/focus effect */
+  transition: all 0.2s;
 }
 
 #btn-update:hover,
@@ -345,8 +344,7 @@ a:active {
   padding-bottom: 15px; /* Add some space between the content and the line */
   margin-bottom: 20px; /* Add space between each listing */
 }
-/* Custom CSS to change carousel arrow color to black */
-/* Custom CSS to change carousel arrow color to black */
+
 .custom-carousel .carousel-control-prev-icon,
 .custom-carousel .carousel-control-next-icon {
   filter: brightness(5) invert(1);
@@ -362,7 +360,9 @@ a:active {
 .sell {
   text-align: left;
 }
-/* Add this to your CSS file */
 .mb-row {
   margin-bottom: 20px; /* Adjust the value as needed */
+}
+.footer {
+  margin-top: auto;
 }

@@ -50,7 +50,6 @@ const Sell = () => {
       const timestampedListing = { ...createdListing, createdAt: new Date() };
       setListings([timestampedListing]);
 
-      // Reset the form
       setNewListing({ title: "", description: "", price: "", category: "" });
 
       setShowPopup(true);
@@ -68,8 +67,8 @@ const Sell = () => {
         setShowPopup(true);
         setTimeout(() => {
           setShowPopup(false);
-          navigate("/mylisting"); // Navigate to /mylisting
-        }, 2000); // Assuming you still want to show the success message for 3 seconds
+          navigate("/mylisting");
+        }, 2000);
       }
       console.log("Listing created successfully.");
     } catch (error) {
@@ -83,7 +82,14 @@ const Sell = () => {
     >
       <NavBar />
       <hr />
-      <Container style={{ flex: "1" }}>
+      <Container
+        style={{
+          flex: "1",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {showPopup && (
           <div className="alert alert-success">
             Listing created successfully!

@@ -7,7 +7,7 @@ const OfferSchema = new mongoose.Schema(
       required: true,
     },
     buyerId: {
-      type: mongoose.Schema.Types.ObjectId, // Reference to User model
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
     listing: {
@@ -30,12 +30,11 @@ const OfferSchema = new mongoose.Schema(
     },
   },
   {
-    toJSON: { virtuals: true }, // Enable virtuals in JSON output
+    toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
 
-// Virtual for 'offerId' that returns the '_id' as a string
 OfferSchema.virtual("offerId").get(function () {
   return this._id.toHexString();
 });

@@ -26,13 +26,12 @@ const MyOffer = () => {
         throw new Error(`Error: ${response.status}`);
       }
 
-      // Refresh the offers after canceling
       fetchOffers();
     } catch (error) {
       console.error("Failed to cancel offer:", error);
     }
     setPopupMessage("Offer cancelled");
-    setTimeout(() => setPopupMessage(""), 3000); // Hide the message after 3 seconds
+    setTimeout(() => setPopupMessage(""), 3000);
   };
 
   const fetchOffers = async () => {
@@ -71,7 +70,13 @@ const MyOffer = () => {
   }, [userCtx.userId, userCtx.accessToken]);
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <NavBar />
       <hr />
       {popupMessage && (

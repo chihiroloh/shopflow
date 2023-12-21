@@ -1,9 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/user";
-import { jwtDecode } from "jwt-decode";
-import { Row, Col } from "react-bootstrap"; // Import Row and Col components from react-bootstrap
-
 import {
   MDBContainer,
   MDBCol,
@@ -44,7 +41,7 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username, password }), // Corrected from email to username
+          body: JSON.stringify({ username, password }),
         }
       );
 
@@ -54,7 +51,6 @@ const Login = () => {
         const data = await response.json();
         userCtx.setAccessToken(data.access);
 
-        // Fetch user info
         const userInfoResponse = await fetch(
           import.meta.env.VITE_SERVER + "/api/auth/userinfo",
           {
@@ -86,13 +82,6 @@ const Login = () => {
       console.error("Login error:", error.message);
     }
   };
-  const handleLogout = () => {
-    // Clear user authentication info, but not offer details
-    userCtx.clearUserInfo(); // Clears user context
-    localStorage.removeItem("accessToken"); // Example: Clear access token
-    // Do not remove 'offerDetails' here
-    navigate("/login");
-  };
 
   return (
     <div style={backgroundStyle}>
@@ -113,7 +102,7 @@ const Login = () => {
             <MDBInput
               wrapperClass="mb-4"
               label="Password"
-              id="passwordFormControlLg" // Unique ID for password input
+              id="passwordFormControlLg"
               type="password"
               size="lg"
               value={password}

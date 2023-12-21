@@ -70,8 +70,8 @@ const Admin = () => {
       );
 
       if (response.ok) {
-        fetchUsers(); // Re-fetch users to update the list
-        setEditingUserId(null); // Exit editing mode
+        fetchUsers();
+        setEditingUserId(null);
       } else {
         console.error("Failed to update user:", response.statusText);
       }
@@ -97,7 +97,7 @@ const Admin = () => {
         );
 
         if (response.ok) {
-          fetchUsers(); // Re-fetch users to update the list
+          fetchUsers();
         } else {
           console.error("Failed to delete user:", response.statusText);
         }

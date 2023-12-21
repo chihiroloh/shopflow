@@ -7,15 +7,15 @@ const UserContext = createContext({
   setUserId: () => {},
   username: "Default User",
   setUsername: () => {},
-  isAdmin: false, // Add isAdmin with a default value
-  setIsAdmin: () => {}, // Add setIsAdmin function
+  isAdmin: false,
+  setIsAdmin: () => {},
 });
 
 const UserProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
   const [userId, setUserId] = useState(null);
   const [username, setUsername] = useState("Default User");
-  const [isAdmin, setIsAdmin] = useState(false); // Initialize isAdmin state
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     fetchUserData();
@@ -25,7 +25,6 @@ const UserProvider = ({ children }) => {
     console.log("User Context Username:", username);
   }, [username]);
 
-  // Function to fetch user data
   const fetchUserData = async () => {
     if (accessToken) {
       try {
@@ -45,14 +44,13 @@ const UserProvider = ({ children }) => {
         const userData = await response.json();
         setUsername(userData.username);
         setUserId(userData._id);
-        setIsAdmin(userData.isAdmin); // Set isAdmin from the response
+        setIsAdmin(userData.isAdmin);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     }
   };
 
-  // Fetch user data when accessToken changes
   useEffect(() => {
     fetchUserData();
   }, [accessToken]);
@@ -66,8 +64,8 @@ const UserProvider = ({ children }) => {
         setUserId,
         username,
         setUsername,
-        isAdmin, // Provide isAdmin in the context
-        setIsAdmin, // Provide setIsAdmin function in the context
+        isAdmin,
+        setIsAdmin,
       }}
     >
       {children}

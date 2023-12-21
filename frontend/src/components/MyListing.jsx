@@ -121,7 +121,6 @@ const MyListing = () => {
         throw new Error("Failed to update the listing.");
       }
 
-      // immediately update the userListings state with the updated information
       setUserListings((prevListings) =>
         prevListings.map((listing) =>
           listing._id === selectedListing._id
@@ -153,7 +152,6 @@ const MyListing = () => {
         throw new Error("Failed to delete the listing.");
       }
 
-      // remove the deleted listing from the userListings state
       setUserListings((prevListings) =>
         prevListings.filter((listing) => listing._id !== listingId)
       );
@@ -197,7 +195,13 @@ const MyListing = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       <NavBar />
       <hr />
       <Container>
@@ -295,7 +299,7 @@ const MyListing = () => {
         {showUpdateOverlay && (
           <div className="overlay">
             <div className="update-form">
-              <h2 class="text-center">Update Listing</h2>
+              <h2 classname="text-center">Update Listing</h2>
               <br />
               <form onSubmit={handleUpdateSubmit}>
                 <div className="overlay-input">
