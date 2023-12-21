@@ -16,6 +16,7 @@ import ListingDetails from "./components/ListingDetails";
 // import OffersList from "./components/OffersList";
 import Offer from "./components/Offer";
 import MyOffer from "./components/MyOffer";
+import Profile from "./components/Profile";
 const App = () => {
   return (
     <UserProvider>
@@ -35,6 +36,7 @@ const App = () => {
           {/* <Route path="/offerslist" element={<OffersList />} /> */}
           <Route path="/offer" element={<Offer />} />
           <Route path="/myoffer" element={<MyOffer />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </UserProvider>

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import MakeOffer from "./Offer";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+
 const ListingDetail = () => {
   const { id } = useParams();
   const userCtx = useContext(UserContext);
@@ -31,22 +32,28 @@ const ListingDetail = () => {
   }, [id]);
 
   return (
-    <div>
-      <Container>
-        <NavBar />
-        <hr />
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <NavBar />
+      <hr />
+      <Container style={{ flexGrow: 1 }}>
+        {" "}
+        {/* This will make the container grow */}
         {listing && (
           <div>
             <h1>{listing.title}</h1>
             <p>{listing.description}</p>
             <p>Category: {listing.category}</p>
             <p>Price: ${listing.price}</p>
-            {/* Check if the logged-in user is not the owner of the listing */}
             {userCtx.userId !== listing.userId && <MakeOffer listing_id={id} />}
           </div>
         )}
       </Container>
-      <br />
       <Footer />
     </div>
   );

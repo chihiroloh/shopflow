@@ -1,6 +1,11 @@
 #root {
   font-family: "Geneva", sans-serif;
 }
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
 
 .custom-input {
   height: 44px; /* Adjust the width as per your requirements */
@@ -152,7 +157,7 @@
   border: none;
 }
 .button-like {
-  border: 2px solid #742727;
+  border: 0.2px solid #742727;
   background-color: white;
   padding: 10px;
   display: inline-block;
@@ -340,7 +345,24 @@ a:active {
   padding-bottom: 15px; /* Add some space between the content and the line */
   margin-bottom: 20px; /* Add space between each listing */
 }
+/* Custom CSS to change carousel arrow color to black */
+/* Custom CSS to change carousel arrow color to black */
 .custom-carousel .carousel-control-prev-icon,
 .custom-carousel .carousel-control-next-icon {
-  filter: invert(0%);
+  filter: brightness(5) invert(1);
+}
+#long-card {
+  height: 510px;
+  width: 500px;
+}
+
+.profile-text {
+  color: #742727;
+}
+.sell {
+  text-align: left;
+}
+/* Add this to your CSS file */
+.mb-row {
+  margin-bottom: 20px; /* Adjust the value as needed */
 }

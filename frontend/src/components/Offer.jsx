@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
-import { Container } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 const Offer = ({ listing_id }) => {
   const [price, setPrice] = useState("");
@@ -60,34 +60,52 @@ const Offer = ({ listing_id }) => {
 
   return (
     <div>
-      <Container>
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="Your Price Offer"
-        />
-        <button onClick={submitOffer}>Make Offer</button>
-        {offerMade && offerDetails && (
-          <div>
-            <hr />
-            <h2>Offer Details</h2>
-            <p>Price: ${offerDetails.price}</p>
-            <p>Status: {offerDetails.status}</p>
-            <p>Created At: {offerDetails.createdAt}</p>
-            {offerDetails.buyer && <p>Buyer: {offerDetails.buyer}</p>}{" "}
-            {/* Display buyer */}
-            {offerDetails.listingDetails && (
-              <div>
-                <hr />
-                <h2>Listing Details</h2>
-                <p>ID: {offerDetails.listingDetails.id}</p>
-                {/* Display other listing details here */}
-              </div>
-            )}
-          </div>
-        )}
-      </Container>
+      <input
+        type="number"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+        placeholder="Your Price Offer"
+        style={{ marginRight: "10px" }} // Adding right margin to the input
+      />
+      <button
+        onClick={submitOffer}
+        className="btn btn-outline-success" // Apply the same style as the "Create Listing" button
+        style={{ marginBottom: "10px" }} // Adding bottom margin to the button
+      >
+        Make Offer
+      </button>
+      {offerMade && offerDetails && (
+        <Card
+          className="shadow p-3 mb-5 bg-white rounded"
+          style={{ marginTop: "20px" }}
+        >
+          <Card.Body>
+            <Card.Title>Your Offer</Card.Title>
+            <Card.Text>
+              Price: ${offerDetails.price}
+              <br />
+              Status: {offerDetails.status}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      )}
+
+      {/* Separate Row for Listing Details */}
+      {offerMade && offerDetails && offerDetails.listingDetails && (
+        <Row className="mt-3">
+          <Col md={{ span: 6, offset: 6 }}>
+            <Card>
+              <Card.Body>
+                <Card.Title>Listing Details</Card.Title>
+                <Card.Text>
+                  ID: {offerDetails.listingDetails.id}
+                  {/* Display other listing details here */}
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };

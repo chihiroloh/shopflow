@@ -100,16 +100,21 @@ const Registration = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <button variant="blue" onClick={handleRegistration}>
+                <button
+                  id="register-btn"
+                  className="btn btn-primary"
+                  onClick={handleRegistration}
+                  type="submit"
+                >
                   Register
                 </button>
               </>
             )}
             {registrationSuccess && (
               <div>
-                <h1 style={{ fontSize: "70px" }}>
+                <h2 style={{ fontSize: "70px" }}>
                   Thank you for the registration!
-                </h1>
+                </h2>
                 <p>You will now be redirected to the log-in page.</p>
               </div>
             )}

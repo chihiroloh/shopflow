@@ -4,6 +4,8 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import fashionheader from "../assets/fashionheader.png";
+import "./Module.css";
+
 const Fashion = () => {
   const [listings, setListings] = useState([]);
 
@@ -42,18 +44,24 @@ const Fashion = () => {
         flexDirection: "column",
       }}
     >
-      {" "}
       <NavBar />
       <Image src={fashionheader} fluid />
       <Container>
         <br />
         <Row>
           {listings.map((listing) => (
-            <Col key={listing._id} xs={12} sm={6} md={4} lg={3}>
+            <Col
+              key={listing._id}
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              className="mb-row"
+            >
               <Link to={`/listing/${listing._id}`}>
                 <button className="listing-button">
                   <div className="listing">
-                    <h4>{listing.title}</h4>
+                    <h5>{listing.title}</h5>
                     <p>{listing.description}</p>
                     <p>Price: ${listing.price}</p>
                     <p>Posted by: {listing.username}</p>

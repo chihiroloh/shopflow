@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/user";
 import { jwtDecode } from "jwt-decode";
+import { Row, Col } from "react-bootstrap"; // Import Row and Col components from react-bootstrap
+
 import {
   MDBContainer,
   MDBCol,
@@ -125,7 +127,14 @@ const Login = () => {
                 label="Remember me"
               />
             </div>
-            <button onClick={handleLogin}>Login</button>
+            <button
+              onClick={handleLogin}
+              id="login-btn"
+              className="btn btn-success"
+              type="submit"
+            >
+              Login
+            </button>
 
             {/* Register */}
             <div>

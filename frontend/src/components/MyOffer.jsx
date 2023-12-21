@@ -2,11 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import { Container } from "react-bootstrap";
+import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 const MyOffer = () => {
   const [offers, setOffers] = useState([]);
   const userCtx = useContext(UserContext);
+  const [popupMessage, setPopupMessage] = useState("");
 
   const handleCancelOffer = async (offerId) => {
     try {
@@ -30,6 +31,8 @@ const MyOffer = () => {
     } catch (error) {
       console.error("Failed to cancel offer:", error);
     }
+    setPopupMessage("Offer cancelled");
+    setTimeout(() => setPopupMessage(""), 3000); // Hide the message after 3 seconds
   };
 
   const fetchOffers = async () => {
@@ -71,25 +74,65 @@ const MyOffer = () => {
     <div>
       <NavBar />
       <hr />
+      {popupMessage && (
+        <div className="alert alert-success">{popupMessage}</div>
+      )}
       <Container>
-        <h1>My Offers</h1>
-        {offers.length > 0 ? (
-          offers.map((offer) => (
-            <div key={offer._id}>
-              <p>{offer.listing.title}</p>
-              <p>Price: ${offer.price}</p>
-              <p>Status: {offer.status}</p>
-              {offer.status !== "cancelled" && (
-                <button onClick={() => handleCancelOffer(offer._id)}>
-                  Cancel
-                </button>
-              )}
-              <br />
-            </div>
-          ))
-        ) : (
-          <p>You have not made any offers.</p>
-        )}
+        <Row>
+          {/* Active Offers Column */}
+          <Col md={6}>
+            <h1>Active Offers</h1>
+            {offers.filter((offer) => offer.status !== "cancelled").length >
+            0 ? (
+              offers
+                .filter((offer) => offer.status !== "cancelled")
+                .map((offer) => (
+                  <Card key={offer._id} className="mb-3">
+                    <Card.Body>
+                      <Card.Title>{offer.listing.title}</Card.Title>
+                      <Card.Text>
+                        Price: ${offer.price}
+                        <br />
+                        Status: {offer.status}
+                      </Card.Text>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleCancelOffer(offer._id)}
+                      >
+                        Withdraw Offer
+                      </Button>
+                    </Card.Body>
+                  </Card>
+                ))
+            ) : (
+              <p>You have not made any active offers.</p>
+            )}
+          </Col>
+
+          {/* Inactive Offers Column */}
+          <Col md={6}>
+            <h1>Inactive Offers</h1>
+            {offers.filter((offer) => offer.status === "cancelled").length >
+            0 ? (
+              offers
+                .filter((offer) => offer.status === "cancelled")
+                .map((offer) => (
+                  <Card key={offer._id} className="mb-3">
+                    <Card.Body>
+                      <Card.Title>{offer.listing.title}</Card.Title>
+                      <Card.Text>
+                        Price: ${offer.price}
+                        <br />
+                        Status: {offer.status}
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                ))
+            ) : (
+              <p>You have no inactive offers.</p>
+            )}
+          </Col>
+        </Row>
       </Container>
       <br />
       <Footer />

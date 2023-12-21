@@ -104,7 +104,7 @@ const Home = () => {
                 <Link to={`/listing/${listing._id}`}>
                   <button className="listing-button">
                     <div className="listing">
-                      <h4>{listing.title}</h4>
+                      <h5>{listing.title}</h5>
                       <br />
                       <p>Price: ${listing.price}</p>
                       <p>Posted by: {listing.username}</p>

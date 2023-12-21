@@ -69,8 +69,11 @@ function NavBar() {
                 }
                 id="navbarScrollingDropdown"
               >
+                <NavDropdown.Item as={Link} to="/profile">
+                  Profile
+                </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/mylisting">
-                  My Listings
+                  My Listings & Offers
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/myoffer">
                   My Offers

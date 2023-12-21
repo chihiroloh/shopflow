@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import { Container, Col, Row, Image } from "react-bootstrap";
 import electronicsheader from "../assets/electronicsheader.png";
+import "./Module.css";
 
 const Electronics = () => {
   const [listings, setListings] = useState([]);
@@ -43,14 +44,13 @@ const Electronics = () => {
         flexDirection: "column",
       }}
     >
-      {" "}
       <NavBar />
       <Image src={electronicsheader} fluid style={{ maxWidth: "100%" }} />
       <Container>
         <br />
         <Row>
           {listings.map((listing) => (
-            <Col key={listing._id} xs={12} sm={6}>
+            <Col key={listing._id} xs={12} sm={6} className="mb-row">
               <Link to={`/listing/${listing._id}`}>
                 <button className="listing-button">
                   <div className="listing">

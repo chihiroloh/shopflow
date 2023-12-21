@@ -5,6 +5,7 @@ import ig from "../assets/ig.png";
 import x from "../assets/x.png";
 import fb from "../assets/fb.png";
 import "./Module.css";
+
 const Footer = () => {
   return (
     <footer className="footer">

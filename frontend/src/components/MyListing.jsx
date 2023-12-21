@@ -201,7 +201,7 @@ const MyListing = () => {
       <NavBar />
       <hr />
       <Container>
-        <h2>My Listings</h2>
+        <h1>My Listings & Offers</h1>
         <br />
         {userListings.length === 0 ? (
           <p>You have no listings.</p>
@@ -249,7 +249,7 @@ const MyListing = () => {
                         <Carousel className="custom-carousel">
                           {listing.offers.map((offer) => (
                             <Carousel.Item key={offer?._id}>
-                              <div>
+                              <div style={{ textAlign: "center" }}>
                                 <p>
                                   <b>Buyer:</b> {offer.buyer}
                                 </p>
@@ -260,7 +260,7 @@ const MyListing = () => {
                                   <b>Current status:</b> {offer.status}
                                 </p>
                                 <label htmlFor={`status-${offer._id}`}>
-                                  <b>Update status:</b>
+                                  <b>Update status below:</b>
                                 </label>
                                 <select
                                   className="form-select form-select-sm"

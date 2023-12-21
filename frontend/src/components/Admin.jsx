@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import UserContext from "../contexts/user";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 
 const Admin = () => {
   const [users, setUsers] = useState([]);
@@ -125,7 +125,7 @@ const Admin = () => {
           }}
         >
           <h2>All Users</h2>
-          <ul>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
             {users.map((user) => (
               <li key={user._id} style={{ marginBottom: "10px" }}>
                 {editingUserId === user._id ? (
@@ -144,27 +144,39 @@ const Admin = () => {
                       <option value="false">User</option>
                       <option value="true">Admin</option>
                     </select>
-                    <div style={{ display: "block" }}>
-                      <button
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <Button
+                        className="none"
                         onClick={() => handleUpdateUser(user._id, editFormData)}
                       >
                         Save
-                      </button>
-                      <button onClick={() => setEditingUserId(null)}>
+                      </Button>
+                      <Button
+                        className="btn btn-warning"
+                        onClick={() => setEditingUserId(null)}
+                      >
                         Cancel
-                      </button>
+                      </Button>
                     </div>
                   </>
                 ) : (
                   <>
                     {user.username} - {user.isAdmin ? "Admin" : "User"}
-                    <div style={{ display: "block" }}>
-                      <button onClick={() => handleEditClick(user)}>
+                    <div style={{ display: "flex", gap: "10px" }}>
+                      <Button
+                        id="btn-update"
+                        className="none"
+                        onClick={() => handleEditClick(user)}
+                      >
                         Edit
-                      </button>
-                      <button onClick={() => handleDeleteUser(user._id)}>
+                      </Button>
+                      <Button
+                        id="btn-cancel"
+                        className="none"
+                        onClick={() => handleDeleteUser(user._id)}
+                      >
                         Delete
-                      </button>
+                      </Button>
                     </div>
                   </>
                 )}

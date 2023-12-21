@@ -5,7 +5,7 @@ const createListing = async (req, res) => {
   try {
     const { title, description, price, category } = req.body;
     const userId = req.user.id;
-    const images = req.files.map((file) => file.path);
+    // const images = req.files.map((file) => file.path);
 
     if (!req.user.username) {
       return res.status(400).send("User name is required");
@@ -19,7 +19,6 @@ const createListing = async (req, res) => {
       price,
       user: userId,
       username,
-      images,
     });
 
     await newListing.save();
