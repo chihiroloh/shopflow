@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const UserModel = require("../models/Auth");
 
 const auth = (req, res, next) => {
   if (!req.headers.authorization) {
@@ -18,7 +19,8 @@ const auth = (req, res, next) => {
     return res.status(400).json({ status: "error", msg: "unauthorized" });
   }
 };
-const authAdmin = (req, res, next) => {
+
+const authAdmin = async (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(400).json({ status: "error", msg: "no token found" });
   }
@@ -31,8 +33,14 @@ const authAdmin = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
 
-    if (decoded.isAdmin) {
-      console.log("Decoded token:", decoded);
+    // Fetch the user from the database using the user ID from the JWT
+    const user = await UserModel.findById(decoded.id);
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Check if the user has admin privileges
+    if (user.isAdmin) {
       req.user = decoded;
       next();
     } else {

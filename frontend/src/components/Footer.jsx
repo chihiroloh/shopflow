@@ -9,7 +9,6 @@ import "./Module.css";
 const Footer = () => {
   return (
     <footer className="footer">
-      {/* Adjust py-2 for shorter height */}
       <Container className="footercontainer">
         {/* Top Section */}
         <Row>
@@ -17,7 +16,6 @@ const Footer = () => {
             <div className="mb-3">
               <a href="index.html">
                 <Image src={logo} fluid className="w-20" />{" "}
-                {/* Adjust w-50 for smaller logo */}
               </a>
             </div>
             {/* Social Links */}
@@ -70,7 +68,6 @@ const Footer = () => {
                 <p className="smaller-text">
                   Stay up to date with the latest deals and offers!
                 </p>{" "}
-                {/* Adjust text size */}
                 <Form>
                   <Form.Group controlId="formBasicEmail">
                     <Form.Control
@@ -78,12 +75,10 @@ const Footer = () => {
                       placeholder="Email Address"
                       className="text-sm"
                     />{" "}
-                    {/* Apply text-sm class for smaller text */}
                   </Form.Group>
                   <Button className="btn btn-sm" id="custom-button-color">
                     Subscribe
                   </Button>
-                  {/* Apply btn-sm class for smaller button */}
                 </Form>
               </Col>
             </Row>

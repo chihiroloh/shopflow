@@ -62,11 +62,10 @@ const offerController = {
   updateOfferStatus: async (req, res) => {
     try {
       const { offerId } = req.params;
-      const { status } = req.body; // 'accepted' or 'declined'
+      const { status } = req.body;
 
       console.log("Received status:", status);
 
-      // use populate to retrieve the offer with the associated listing and its user
       const offer = await OfferModel.findById(offerId).populate("listing");
 
       if (!offer) {
@@ -76,7 +75,6 @@ const offerController = {
 
       console.log("Before update:", offer);
 
-      // Ensure that the offer has a valid listing associated with it
       if (!offer.listing) {
         console.log("Offer has no associated listing");
         return res.status(400).send("Offer has no associated listing");
@@ -85,7 +83,6 @@ const offerController = {
       console.log("User ID:", req.user.id);
       console.log("Listing Owner ID:", offer.listing.user);
 
-      // Check if the user making the request is the owner of the listing associated with the offer
       if (
         offer.listing.user &&
         offer.listing.user.toString() !== req.user.id.toString()
@@ -124,7 +121,6 @@ const offerController = {
       console.log("req.user:", req.user);
       console.log("offer.buyerId:", offer.buyerId);
 
-      // check if the request is made by the offer's owner or an authorized user
       if (req.user.id.toString() !== offer.buyerId.toString()) {
         console.log("Unauthorized to delete this offer");
         return res.status(403).send("Unauthorized to delete this offer");

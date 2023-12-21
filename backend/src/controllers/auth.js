@@ -59,7 +59,7 @@ const login = async (req, res) => {
     };
 
     const access = jwt.sign(claims, process.env.ACCESS_SECRET, {
-      expiresIn: "30d", // Change the expiration time to 30 days
+      expiresIn: "30d",
       jwtid: uuidv4(),
     });
 
@@ -123,7 +123,7 @@ const updateUser = async (req, res) => {
     const userId = req.params.userId;
     console.log(`Updating user with ID: ${userId}`);
 
-    // First, verify the requesting user is an admin
+    // verify the requesting user is an admin
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
     const requestingUser = await UserModel.findById(decoded.id);
@@ -132,7 +132,7 @@ const updateUser = async (req, res) => {
       return res.status(403).json({ status: "error", msg: "Access denied" });
     }
 
-    // Proceed with the update
+    // proceed with the update
     const updatedData = req.body;
     const user = await UserModel.findByIdAndUpdate(userId, updatedData, {
       new: true,
@@ -152,12 +152,45 @@ const updateUser = async (req, res) => {
     res.status(400).json({ status: "error", msg: "Error updating user" });
   }
 };
+const updateUserAdminPrivilege = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const isAdmin = req.body.isAdmin;
+
+    if (typeof isAdmin !== "boolean") {
+      return res
+        .status(400)
+        .json({ status: "error", msg: "Invalid admin status" });
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { isAdmin },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ status: "error", msg: "User not found" });
+    }
+
+    res.json({
+      _id: updatedUser._id,
+      username: updatedUser.username,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res
+      .status(400)
+      .json({ status: "error", msg: "Error updating user admin privilege" });
+  }
+};
 
 const deleteUser = async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    // Verify if the requester is an admin
+    // verify if the requester is an admin
     const token = req.headers.authorization.split(" ")[1];
     const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
     const requestingUser = await UserModel.findById(decoded.id);
@@ -166,7 +199,7 @@ const deleteUser = async (req, res) => {
       return res.status(403).json({ status: "error", msg: "Access denied" });
     }
 
-    // Proceed with deletion
+    // proceed with deletion
     const user = await UserModel.findByIdAndDelete(userId);
 
     if (!user) {
@@ -187,5 +220,6 @@ module.exports = {
   refresh,
   getUserInfo,
   updateUser,
+  updateUserAdminPrivilege,
   deleteUser,
 };
