@@ -1,4 +1,4 @@
-const OfferModel = require("../models/offer");
+const OfferModel = require("../models/Offer");
 const ListingModel = require("../models/Listing");
 
 const createOffer = async (req, res) => {
