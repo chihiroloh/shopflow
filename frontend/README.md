@@ -46,6 +46,7 @@ createdAt (Date, default: Date.now)
 Relationships
 Each Listing is associated with a User.
 Each Offer is linked to a Listing and a User (as buyer).
+A User can have many Listings.
 
 Environment Variables
 PORT - 5001

@@ -104,7 +104,7 @@ const deleteListing = async (req, res) => {
       return res.status(404).json({ msg: "Listing not found" });
     }
 
-    await ListingModel.deleteOne({ _id: req.params.id });
+    await ListingModel.deleteOne({ _id: req.params.id }); //deletebyid
     res.json({ msg: "Listing deleted successfully" });
   } catch (error) {
     console.error(error.message);

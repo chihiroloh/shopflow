@@ -1,16 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import "../contexts/user";
 
-const UserContext = createContext({
-  accessToken: null,
-  setAccessToken: () => {},
-  userId: null,
-  setUserId: () => {},
-  username: "Default User",
-  setUsername: () => {},
-  isAdmin: false,
-  setIsAdmin: () => {},
-});
+const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
