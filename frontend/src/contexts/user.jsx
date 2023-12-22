@@ -51,10 +51,6 @@ const UserProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    fetchUserData();
-  }, [accessToken]);
-
   return (
     <UserContext.Provider
       value={{
