@@ -1,8 +1,9 @@
-<img width="707" alt="Screenshot 2023-12-23 at 12 39 21 PM" src="https://github.com/chihiroloh/shopflow/assets/108581702/5b1db8b2-3fdd-470c-9c9a-bc5aacc6be91"># Shopflow
+# Shopflow
 
 - ShopFlow is a online marketplace, allowing users to deal easily by making offer on listings and choosing whether to accept or decline the offer.
 
 # Screenshots
+<img width="707" alt="Screenshot 2023-12-23 at 12 39 21 PM" src="https://github.com/chihiroloh/shopflow/assets/108581702/5b1db8b2-3fdd-470c-9c9a-bc5aacc6be91">
 <img width="707" alt="Screenshot 2023-12-23 at 12 39 21 PM" src="https://github.com/chihiroloh/shopflow/assets/108581702/740223e9-e93c-48e2-9959-734557a25325">
 <img width="873" alt="Screenshot 2023-12-23 at 12 39 45 PM" src="https://github.com/chihiroloh/shopflow/assets/108581702/70bc2360-a3c4-4d49-a6f1-af524cb99bf9">
 <img width="890" alt="Screenshot 2023-12-23 at 12 40 46 PM" src="https://github.com/chihiroloh/shopflow/assets/108581702/f73a9533-6ab7-4af3-bd27-5ecafe5e94ab">
