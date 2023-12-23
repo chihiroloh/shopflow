@@ -30,7 +30,8 @@
 Listings Entity
 
 - Represents various items/services users can offer on the platform.
-  Key attrbiutes
+
+Key attrbiutes
 - Title
 - Description
 - Price
@@ -40,7 +41,8 @@ Listings Entity
 Offers Entity
 
 - Encapsulates bids that users make on the listings. Each offer is tied to a specific listing and include details of proposal made by the user.
-  Key attributes
+
+Key attributes
 - Buyer (User making the offer)
 - Listing Reference (Link to the associated listing)
 - Offered Price
@@ -49,7 +51,8 @@ Offers Entity
 Users Entity
 
 - Represents individuals who interact with the platform whether posting listings or making offers.
-  Key attributes
+
+Key attributes
 - Username
 - Password
 
