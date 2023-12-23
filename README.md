@@ -65,7 +65,13 @@ Listings-Offers Relationship
 
 # Environment Variables
 
-PORT - 5001
-DATABASE - Connection string for MongoDB (mongodb://127.0.0.1:27017/Carousell)
-ACCESS_SECRET
-REFRESH_SECRET
+Backend
+
+- PORT - 5001
+- DATABASE - mongodb://- 127.0.0.1:27017/Carousell
+- ACCESS_SECRET
+- REFRESH_SECRET
+
+Frontend
+
+- VITE_SERVER - http://localhost:5001
